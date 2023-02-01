@@ -1,0 +1,41 @@
+﻿@page "/office-list"
+@inject HttpClient Http
+
+<h3>List of companies</h3>
+
+@if (offices == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Address</th>
+                <th>Id</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var company in offices)
+            {
+                <tr>
+                    <td>@company.Name</td>
+                    <td>@company.Address</td>
+                    <td>@company.Id</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private List<Office> offices;
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        offices = await Http.GetFromJsonAsync<List<Office>>("api/Companies");
+    }
+}

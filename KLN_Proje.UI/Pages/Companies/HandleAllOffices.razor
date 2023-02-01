@@ -1,0 +1,259 @@
+﻿@page "/offices"
+@inject HttpClient Http
+@inject NavigationManager UriHelper
+
+<h3>Offices</h3>
+<button class="btn btn-success" @onclick="Creating">Create</button>
+<br />
+<br />
+@if (offices == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    @if (key)
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Address</th>
+                    <th>Company Id</th>
+                    <th><!--Edit--></th>
+                    <th><!--Delete--></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var office in offices)
+                {
+                    <tr>
+                        <td>@office.Id</td>
+                        <td>@office.Name</td>
+                        <td>@office.Address</td>
+                        <td>@office.CompanyId</td>
+                        <td><button class="btn btn-primary" @onclick="(() => TakeIdForEdit(office.Id,office.CompanyId))">Edit</button></td>
+                        <td><button class="btn btn-danger" @onclick="(() => TakeIdForDelete(office.Id, office))">Delete</button></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Address</th>
+                    <th>Company Id</th>
+                    <th><!--Edit--></th>
+                    <th><!--Delete--></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var office in offices)
+                {
+                    <tr>
+                        <td>@office.Id</td>
+                        <td>@office.Name</td>
+                        <td>@office.Address</td>
+                        <td>@office.CompanyId</td>
+                        <td><button class="btn btn-primary" @onclick="(() => TakeIdForEdit(office.Id,office.CompanyId))">Edit</button></td>
+                        <td><button class="btn btn-danger" @onclick="(() => TakeIdForDelete(office.Id, office))">Delete</button></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+
+}
+
+@if (isEdit)
+{
+    <EditForm Model="@officeForUpdate">
+        <DataAnnotationsValidator />
+
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Update Warehouse </h5>
+                <div class="form-group row">
+                    <label class="col-sm-4 col-form-label">Office Id: <span class="font-weight-bold">@officeId</span></label>
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-sm-4 col-form-label">Name</label>
+                    <div class="col-sm-8">
+                        <InputText id="name" class="form-control" placeholder="Warehouse Name" @bind-Value="@officeForUpdate.Name" />
+                        <span><ValidationMessage For="@(() => officeForUpdate.Name)" /></span>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-sm-4 col-form-label">Address</label>
+                    <div class="col-sm-8">
+                        <InputText id="name" class="form-control" placeholder="Warehouse Name" @bind-Value="@officeForUpdate.Address" />
+                        <span><ValidationMessage For="@(() => officeForUpdate.Address)" /></span>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-sm-4 col-form-label">Company Name: <span class="font-weight-bolder"></span></label>
+                    <div class="col-sm-8">
+                        <InputSelect @bind-Value="officeForUpdate.CompanyId" class="form-control">
+                            <option value=0>Choose</option>
+                            @foreach (var company in companies)
+                                {
+                                <option value="@company.Id">@company.Name</option>
+                                }
+                        </InputSelect>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-sm-8">
+                        <button @onclick="@PutOffice" type="submit" class="btn btn-primary">Update Office</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </EditForm>
+}
+@if (isCreate)
+{
+    <h3>Add Warehouse</h3>
+    <EditForm Model="@officeForAdd">
+        <DataAnnotationsValidator />
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Add the Office Credentials</h5>
+                <div class="form-group row">
+                    <label class="col-sm-4 col-form-label">Name</label>
+                    <div class="col-sm-8">
+                        <InputText id="name" class="form-control" placeholder="Warehouse Name" @bind-Value="@officeForAdd.Name" />
+                        <ValidationMessage For="@(() => officeForAdd.Name)" />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-4 col-form-label">Address</label>
+                    <div class="col-sm-8">
+                        <InputText id="name" class="form-control" placeholder="Warehouse Name" @bind-Value="@officeForAdd.Address" />
+                        <ValidationMessage For="@(() => officeForAdd.Address)" />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-4 col-form-label">Company Name</label>
+                    <div class="col-sm-8">
+                        <!--<select class="form-control" @onchange="SelectCompany" @onclick="IsSelecting">-->
+                        <select class="form-control" @onchange="SelectCompany">
+                            <option value=0>Choose</option>
+                            @if (companies == null)
+                            {
+                                <p>companies null</p>
+                            }
+                            else
+                            {
+                                @foreach (var company in companies)
+                                {
+                                    <option value=@company.Id>@company.Name</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-sm-8">
+                        <button @onclick=@CreateOffice type="submit" class="btn btn-primary">Save Office</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </EditForm>
+}
+
+@code
+{
+    public List<Warehouse> warehouses;
+    public Warehouse warehouse2;
+    public bool isEdit = false;
+    public bool isCreate = false;
+    public bool key = true;
+    public int officeId = 0;
+    public int companyId = 0;
+    public string warehousesString;
+    public string companiesString;
+
+    public Office officeForUpdate = new Office();
+    public Office officeForAdd = new Office();
+
+    //variables for binding
+    public string companyIdString = "";
+    public void SelectCompany(ChangeEventArgs e)
+    {
+        companyIdString = e.Value.ToString();
+        companyId = Int32.Parse(companyIdString);
+    }
+
+    public void TakeIdForEdit(int id, int _companyId)
+    {
+        officeId = id;
+        companyId = _companyId;
+        isEdit = true;
+        isCreate = false;
+    }
+
+    public void CreateOffice()
+    {
+        officeForAdd.CompanyId = companyId;
+        Http.PostAsJsonAsync("api/companies", officeForAdd);
+        offices.Add(officeForAdd);
+        UriHelper.NavigateTo("offices");
+    }
+
+    public void TakeIdForDelete(int id, Office _office)
+    {
+        Http.DeleteAsync($"api/companies/{id}");
+        offices.Remove(_office);
+        UriHelper.NavigateTo("offices");
+        isEdit = false;
+        isCreate = false;
+    }
+    public void WarehousetoBeSent(Warehouse warehousesToBeSent)
+    {
+        var x = warehouses.Find(x => x.Id == warehousesToBeSent.Id);
+        x.CompanyId = warehousesToBeSent.CompanyId;
+        x.Name = warehousesToBeSent.Name;
+    }
+
+    private async Task PutOffice()
+    {
+        officeForUpdate.CompanyId = companyId;
+        var officeUpdate = offices.FirstOrDefault(x => x.Id == officeId);
+        officeUpdate.Name = officeForUpdate.Name;
+        officeUpdate.Address = officeForUpdate.Address;
+        officeUpdate.CompanyId = officeForUpdate.CompanyId;
+        await Http.PutAsJsonAsync("api/warehouses", officeForUpdate);
+    }
+    public void IsCreate(bool key)
+    {
+        isCreate = key;
+    }
+
+    public void Creating()
+    {
+        isCreate = true;
+        isEdit = false;
+    }
+
+    public List<Office> offices = new List<Office>();
+    public List<Company> companies = new List<Company>();
+    protected override async Task OnInitializedAsync()
+    {
+        warehouses = await Http.GetFromJsonAsync<List<Warehouse>>("api/Warehouses");
+        offices = await Http.GetFromJsonAsync<List<Office>>("api/Companies");
+        warehousesString = await Http.GetStringAsync("api/Warehouses");
+        companies = await Http.GetFromJsonAsync<List<Company>>("api/CompanyInformations");
+    }
+}

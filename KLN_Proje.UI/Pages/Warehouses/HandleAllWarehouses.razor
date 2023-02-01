@@ -1,0 +1,132 @@
+﻿@page "/warehouses"
+@inject HttpClient Http
+@inject NavigationManager UriHelper
+
+<h3>Warehouses</h3>
+<button class="btn btn-success" @onclick="Creating">Create</button>
+<br />
+<br />
+@if (warehouses == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    @if (key)
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Company Id</th>
+                    <th><!--Edit--></th>
+                    <th><!--Delete--></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var warehouse in warehouses)
+                {
+                    <tr>
+                        <td>@warehouse.Id</td>
+                        <td>@warehouse.Name</td>
+                        <td>@warehouse.CompanyId</td>
+                        <td><button class="btn btn-primary" @onclick="(() => TakeIdForEdit(warehouse.Id,warehouse.CompanyId))">Edit</button></td>
+                        <td><button class="btn btn-danger" @onclick="(() => TakeIdForDelete(warehouse.Id, warehouse))">Delete</button></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Company Id</th>
+                    <th><!--Edit--></th>
+                    <th><!--Delete--></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var warehouse in warehouses)
+                {
+                    <tr>
+                        <td>@warehouse.Id</td>
+                        <td>@warehouse.Name</td>
+                        <td>@warehouse.CompanyId</td>
+                        <td><button class="btn btn-primary" @onclick="(() => TakeIdForEdit(warehouse.Id,warehouse.CompanyId))">Edit</button></td>
+                        <td><button class="btn btn-danger" @onclick="(() => TakeIdForDelete(warehouse.Id, warehouse))">Delete</button></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+
+}
+
+@if (isEdit)
+{
+    <UpdateWarehouseForAll warehouseId="warehouseId" companyId="companyId" companiesString="@companiesString" warehosuesString="@warehousesString" WarehouseToBeSent="WarehousetoBeSent"></UpdateWarehouseForAll>
+}
+@if (isCreate)
+{
+    <AddWarehouseByManually IsCreate="IsCreate" ></AddWarehouseByManually>
+}
+
+@code
+{
+    public List<Warehouse> warehouses;
+    public Warehouse warehouse2;
+    public bool isEdit = false;
+    public bool isCreate = false;
+    public bool key = true;
+    public int warehouseId = 0;
+    public int companyId = 0;
+    public string warehousesString;
+    public string companiesString;
+
+    public Warehouse warehouseForUpdate;
+
+    public void TakeIdForEdit(int id, int _companyId)
+    {
+        warehouseId = id;
+        companyId = _companyId;
+        isEdit = true;
+        isCreate = false;
+    }
+
+    public void TakeIdForDelete(int id, Warehouse warehouse)
+    {
+        Http.DeleteAsync($"api/warehouses/{id}");
+        warehouses.Remove(warehouse);
+        UriHelper.NavigateTo("warehouses");
+        isEdit = false;
+        isCreate = false;
+    }
+    public void WarehousetoBeSent(Warehouse warehousesToBeSent)
+    {
+        var x = warehouses.Find(x => x.Id == warehousesToBeSent.Id);
+        x.CompanyId = warehousesToBeSent.CompanyId;
+        x.Name = warehousesToBeSent.Name;
+    }
+    public void IsCreate(bool key)
+    {
+        isCreate = key;
+    }
+
+    public void Creating()
+    {
+        isCreate = true;
+        isEdit = false;
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        warehouses = await Http.GetFromJsonAsync<List<Warehouse>>("api/Warehouses");
+        warehousesString = await Http.GetStringAsync("api/Warehouses");
+        companiesString = await Http.GetStringAsync("api/CompanyInformations");
+    }
+}

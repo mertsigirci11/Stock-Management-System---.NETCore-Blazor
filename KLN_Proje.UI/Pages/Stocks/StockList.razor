@@ -1,0 +1,59 @@
+﻿@page "/stock-list"
+@inject HttpClient Http
+
+<h3>List of stocks</h3>
+
+@if (stocks == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Piece</th>
+                <th>Warehouse</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var stock in stocks)
+            {
+                <tr>
+                    <td>@stock.Id</td>
+                    <td>@stock.Name</td>
+                    <td>@stock.Price</td>
+                    <td>@stock.Piece</td>
+                    @foreach (var warehouse in warehouses)
+                    {
+                        if (warehouse.Id == stock.WarehouseId)
+                        {
+                            <td>@warehouse.Name</td>
+                        }
+                        else
+                        {
+                            continue;
+                        }
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+
+@code {
+    private List<Stock> stocks;
+    private List<Warehouse> warehouses;
+
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        stocks = await Http.GetFromJsonAsync<List<Stock>>("api/Stocks");
+        warehouses = await Http.GetFromJsonAsync<List<Warehouse>>("api/Warehouses");
+    }
+}

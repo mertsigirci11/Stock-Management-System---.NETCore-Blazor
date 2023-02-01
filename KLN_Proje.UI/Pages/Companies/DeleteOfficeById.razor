@@ -1,0 +1,137 @@
+﻿@page "/office-delete-by-id"
+@inject HttpClient Http
+<h3>Delete Offices By Choosing Company</h3>
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title">Please choose the company name</h5>
+        <div class="form-group row">
+            <label class="col-sm-4 col-form-label">Company Name</label>
+            <div class="col-sm-8">
+                <select class="form-control" @onchange="SelectCompany" @onclick="IsSelecting">
+                    <option value=0>Choose</option>
+                    @if (companies == null)
+                    {
+                        <p>companies null</p>
+                    }
+                    else
+                    {
+                        @foreach (var company in companies)
+                        {
+                            <option value=@company.Id>@company.Name</option>
+                        }
+                    }
+                </select>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-sm-8">
+                <button type="button" class="btn btn-primary" @onclick="ChangeSitutation">Select</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@if (companyId != 0 && selecting)
+{
+    <h3>List of offices</h3>
+
+    @if (offices == null)
+    {
+        <p><em>Loading...</em></p>
+    }
+    else
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Address</th>
+                    <th>Company Id</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @foreach (var office in offices)
+                {
+                    <tr>
+                        <td>@office.Id</td>
+                        <td>@office.Name</td>
+                        <td>@office.Address</td>
+                        <td>@office.CompanyId</td>
+                        <td><button class="btn btn-danger" @onclick="(() => DeleteOffice(office.Id))">Delete</button></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+
+    @if (showKey)
+    {
+        <DeleteDialogBox Title="WARNING !!!" Text="Are you sure for delete operation?" OnClose="OnClose"></DeleteDialogBox>
+    }
+}
+
+
+
+@code
+{
+    //variables for binding
+    public string companyIdString = "";
+    public int companyId = 0;
+    public int officeId = 0;
+
+    //variables for check situations to show list
+    public bool selecting = true;
+    public bool showKey = false;
+    public bool operationKey = false;
+
+    public void IsSelecting()
+    {
+        selecting = false;
+    }
+    public void ChangeSitutation()
+    {
+        selecting = true;
+    }
+    public void SelectCompany(ChangeEventArgs e)
+    {
+        companyIdString = e.Value.ToString();
+        companyId = Int32.Parse(companyIdString);
+    }
+
+    public void OnClose(bool _key)
+    {
+        showKey = false;
+        operationKey = _key;
+        NewMethod(officeId);
+    }
+
+    public void NewMethod(int id)
+    {
+        if (operationKey)
+        {
+            Http.DeleteAsync($"api/companies/{id}");
+            var x = offices.Where(i => i.Id == id).ToList();
+            offices.Remove(x.First());
+            showKey = false;
+        }
+    }
+
+    public void DeleteOffice(int id)
+    {
+        showKey = true;
+        officeId = id;
+    }
+
+    //api consuming
+    public List<Company> companies;
+    public List<Office> offices;
+    protected override async Task OnInitializedAsync()
+    {
+        companies = await Http.GetFromJsonAsync<List<Company>>("api/CompanyInformations");
+        offices = await Http.GetFromJsonAsync<List<Office>>("api/Companies");
+    }
+}

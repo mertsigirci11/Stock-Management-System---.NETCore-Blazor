@@ -1,0 +1,4 @@
+﻿<StaticWebAssets Version="1.0">
+  <ContentRoot BasePath="/" Path="C:\Users\Mert Sigirci\Desktop\KLN_Proje\KLN_Proje.WebUI\bin\Debug\net5.0\wwwroot\" />
+  <ContentRoot BasePath="/" Path="C:\Users\Mert Sigirci\Desktop\KLN_Proje\KLN_Proje.WebUI\obj\Debug\net5.0\scopedcss\bundle\" />
+</StaticWebAssets>

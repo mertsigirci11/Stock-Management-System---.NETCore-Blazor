@@ -1,0 +1,364 @@
+﻿@page "/stock-update-by-id"
+
+@inject HttpClient Http
+<h3>Update Stock By Choosing Company</h3>
+
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title">Please choose the company name</h5>
+        <div class="form-group row">
+            <label class="col-sm-4 col-form-label">Company Name</label>
+            <div class="col-sm-8">
+                <select class="form-control" @onchange="SelectCompany" @onclick="IsSelecting">
+                    <option value=0>Choose</option>
+                    @if (companies == null)
+                    {
+                        <p>companies null</p>
+                    }
+                    else
+                    {
+                        @foreach (var company in companies)
+                        {
+                            <option value=@company.Id>@company.Name</option>
+                        }
+                    }
+                </select>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-sm-8">
+                <button type="button" class="btn btn-primary" @onclick="ChangeSitutation">Select</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@if (selecting)
+{
+    @if (companyId != 0 && key)
+    {
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Please choose the warehouse name</h5>
+                <div class="form-group row">
+                    <label class="col-sm-4 col-form-label">Warehouse Name</label>
+                    <div class="col-sm-8">
+                        <select class="form-control" @onchange="SelectWarehouse" @onclick="IsSelectingWarehouse">
+                            <option value=0>Choose</option>
+                            @if (warehouses == null)
+                            {
+                                <p>warehouses null</p>
+                            }
+                            else
+                            {
+                                @foreach (var warehouse in warehouses)
+                                {
+                                    @if (warehouse.CompanyId == companyId)
+                                    {
+                                        <option value=@warehouse.Id>@warehouse.Name</option>
+                                    }
+
+                                }
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-sm-8">
+                        <button type="button" class="btn btn-primary" @onclick="ChangeSitutationWarehouse">Select</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    @if (companyId != 0 && !key)
+    {
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Please choose the warehouse name</h5>
+                <div class="form-group row">
+                    <label class="col-sm-4 col-form-label">Warehouse Name</label>
+                    <div class="col-sm-8">
+                        <select class="form-control" @onchange="SelectWarehouse" @onclick="IsSelectingWarehouse">
+                            <option value=0>Choose</option>
+                            @if (warehouses == null)
+                            {
+                                <p>warehouses null</p>
+                            }
+                            else
+                            {
+                                @foreach (var warehouse in warehouses)
+                                {
+                                    @if (warehouse.CompanyId == companyId)
+                                    {
+                                        <option value=@warehouse.Id>@warehouse.Name</option>
+                                    }
+
+                                }
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-sm-8">
+                        <button type="button" class="btn btn-primary" @onclick="ChangeSitutationWarehouse">Select</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+}
+
+
+@if (selectingWarehouse && showStockList)
+{
+    @if (warehouseId != 0 && keyWarehouse)
+    {
+        <h3>List of stocks</h3>
+        @if (warehouses == null)
+        {
+            <p><em>Loading...</em></p>
+        }
+        else
+        {
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Name</th>
+                        <th>Price</th>
+                        <th>Piece</th>
+                        <th>Warehouse Id</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @foreach (var stock in stocks) //UpdateWarehouse'dan veri gönder liste güncellenecek
+                    {
+                        @if (warehouseId == stock.WarehouseId)
+                        {
+                            <tr>
+                                <td>@stock.Id</td>
+                                <td>@stock.Name</td>
+                                <td>@stock.Price $</td>
+                                <td>@stock.Piece</td>
+                                <td>@stock.WarehouseId</td>
+                                <td><button class="btn btn-primary" @onclick="(() => TakeId(stock.Id))">Edit</button></td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        }
+    }
+    @if (warehouseId != 0 && !keyWarehouse)
+    {
+        <h3>List of stocks</h3>
+        @if (warehouses == null)
+        {
+            <p><em>Loading...</em></p>
+        }
+        else
+        {
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Name</th>
+                        <th>Price</th>
+                        <th>Piece</th>
+                        <th>Warehouse Id</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @foreach (var stock in stocks) //UpdateWarehouse'dan veri gönder liste güncellenecek
+                    {
+                        @if (warehouseId == stock.WarehouseId)
+                        {
+                            <tr>
+                                <td>@stock.Id</td>
+                                <td>@stock.Name</td>
+                                <td>@stock.Price $</td>
+                                <td>@stock.Piece</td>
+                                <td>@stock.WarehouseId</td>
+                                <td><button class="btn btn-primary" @onclick="(() => TakeId(stock.Id))">Edit</button></td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        }
+    }
+}
+
+@if (keyStock)
+{
+    <EditForm Model="stock">
+        <DataAnnotationsValidator />
+
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Update Stock </h5>
+                <div class="form-group row">
+                    @{
+                        stock.Id = stockId;
+                    }
+                    <label class="col-sm-4 col-form-label">Stock Id: <span class="font-weight-bold">@stockId</span></label>
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-sm-4 col-form-label">Name</label>
+                    <div class="col-sm-8">
+                        <InputText id="name" class="form-control" placeholder="Stock Name" @bind-Value="@stock.Name" />
+                        <span><ValidationMessage For="@(() => stock.Name)" /></span>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-sm-4 col-form-label">Prices</label>
+                    <div class="col-sm-8">
+                        <InputNumber id="price" class="form-control" placeholder="Price" @bind-Value="@stock.Price" />
+                        <span><ValidationMessage For="@(() => stock.Price)" /></span>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-sm-4 col-form-label">Pieces</label>
+                    <div class="col-sm-8">
+                        <InputNumber id="piece" class="form-control" placeholder="Piece" @bind-Value="@stock.Piece" />
+                        <span><ValidationMessage For="@(() => stock.Piece)" /></span>
+                    </div>
+                </div>
+
+                <!--Warehouse için selectbox başlangıç-->
+                <div class="form-group row">
+                    <label class="col-sm-4 col-form-label">Warehouse Name: <span class="font-weight-bolder"></span></label>
+                    <div class="col-sm-8">
+                        <InputSelect @bind-Value="stock.WarehouseId" class="form-control">
+                            <option value=0>Choose</option>
+                            @foreach (var warehouse in warehouses)
+                                {
+                                @if (warehouse.CompanyId == companyId)
+                                    {
+                                    <option value="@warehouse.Id">@warehouse.Name</option>
+                                    }
+                                }
+                        </InputSelect>
+                    </div>
+                </div>
+
+                <!--Warehouse için selectbox bitiş-->
+
+                <div class="form-group row">
+                    <div class="col-sm-8">
+                        <button @onclick="@PutStock" type="submit" class="btn btn-primary">Update Stock</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </EditForm>
+}
+
+@code {
+    public Stock stock = new Stock();
+    //variables for binding
+    public string companyIdString = "";
+    public int companyId = 0;
+    public string warehouseIdString = "";
+    public int warehouseId = 0;
+    public int stockId = 0;
+
+    //variables for check situations to show list
+    public bool key = true;
+    public bool showStockList = true;
+    public bool keyWarehouse = true;
+    public bool keyStock = false;
+    public bool selecting = true;
+    public bool selectingWarehouse = true;
+
+    public void TakeId(int id)
+    {
+        stockId = id;
+        if (id != 0)
+        {
+            keyStock = true;
+        }
+    }
+
+    public void IsSelecting()
+    {
+        selecting = false;
+        showStockList = false;
+    }
+    public void IsSelectingWarehouse()
+    {
+        selectingWarehouse = false;
+        showStockList = false;
+    }
+    public void ChangeSitutation()
+    {
+        selecting = true;
+
+        if (key == true)
+        {
+            key = false;
+        }
+        else
+        {
+            key = true;
+        }
+    }
+    public void ChangeSitutationWarehouse()
+    {
+        selectingWarehouse = true;
+        showStockList = true;
+
+        if (keyWarehouse == true)
+        {
+            keyWarehouse = false;
+        }
+        else
+        {
+            keyWarehouse = true;
+        }
+    }
+    public void SelectCompany(ChangeEventArgs e)  //Selectform işi halletti
+    {
+        companyIdString = e.Value.ToString();
+        companyId = Int32.Parse(companyIdString);
+    }
+    public void SelectWarehouse(ChangeEventArgs e)
+    {
+        warehouseIdString = e.Value.ToString();
+        warehouseId = Int32.Parse(warehouseIdString);
+    }
+    private async Task PutStock()
+    {
+        //warehouse.CompanyId = companyId;
+        var stockUpdate = stocks.FirstOrDefault(x => x.Id == stockId);
+        await Http.PutAsJsonAsync("api/stocks", stock);
+        stockUpdate.Name = stock.Name;
+        stockUpdate.Price = stock.Price;
+        stockUpdate.Piece = stock.Piece;
+        stockUpdate.WarehouseId = stock.WarehouseId;
+        keyStock = false;
+    }
+
+    public string companiesString;
+
+    //api consuming
+    public List<Company> companies;
+    public List<Warehouse> warehouses;
+    public List<Stock> stocks;
+    protected override async Task OnInitializedAsync()
+    {
+        companies = await Http.GetFromJsonAsync<List<Company>>("api/CompanyInformations");
+        companiesString = await Http.GetStringAsync("api/CompanyInformations");
+        warehouses = await Http.GetFromJsonAsync<List<Warehouse>>("api/Warehouses");
+        stocks = await Http.GetFromJsonAsync<List<Stock>>("api/Stocks");
+    }
+}

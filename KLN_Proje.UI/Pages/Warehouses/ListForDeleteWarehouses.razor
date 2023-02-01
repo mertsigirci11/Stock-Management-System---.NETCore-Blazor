@@ -1,0 +1,94 @@
+﻿@inject HttpClient Http
+
+<h3>List of warehouses</h3>
+
+@if (warehouses == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Company Id</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach (var warehouse in warehouses)
+            {
+                <tr>
+                    <td>@warehouse.Id</td>
+                    <td>@warehouse.Name</td>
+                    <td>@warehouse.CompanyId</td>
+                    <td><button class="btn btn-danger" @onclick="(() => DeleteWarehouse(warehouse.Id))">Delete</button></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@if (showKey)
+{
+    <DeleteDialogBox Title="WARNING !!!" Text="Are you sure for delete operation?" OnClose="OnClose"></DeleteDialogBox>
+}
+
+
+@code {
+
+    public bool operationKey = false;
+    public bool showKey = false;
+    public int iddd;
+
+    public void OnClose(bool _key)
+    {
+        showKey = false;
+        operationKey = _key;
+        /*if (operationKey)
+        {
+            Http.DeleteAsync($"api/warehouses/{id}");
+            var x = warehouses.Where(i => i.Id == id).ToList();
+            warehouses.Remove(x.First());
+            showKey = false;
+        }*/
+        NewMethod(iddd);
+    }
+
+    [Parameter]
+    public int companyId { get; set; }
+
+
+    public List<Warehouse> warehouses;
+    protected override async Task OnInitializedAsync()
+    {
+        warehouses = await Http.GetFromJsonAsync<List<Warehouse>>($"api/Warehouses/{companyId}");
+    }
+
+    public void NewMethod(int id)
+    {
+        if(operationKey)
+        {
+            Http.DeleteAsync($"api/warehouses/{id}");
+            var x = warehouses.Where(i => i.Id == id).ToList();
+            warehouses.Remove(x.First());
+            showKey = false;
+        }
+    }
+
+    public void DeleteWarehouse(int id)
+    {
+        showKey = true;
+        iddd = id;
+        /*if (operationKey)
+        {
+            Http.DeleteAsync($"api/warehouses/{id}");
+            var x = warehouses.Where(i => i.Id == id).ToList();
+            warehouses.Remove(x.First());
+            showKey = false;
+        }*/
+    }
+}

@@ -1,0 +1,296 @@
+﻿@page "/office-update-by-id"
+
+@inject HttpClient Http
+<h3>Update Offices By Choosing Company</h3>
+
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title">Please choose the company name</h5>
+        <div class="form-group row">
+            <label class="col-sm-4 col-form-label">Company Name</label>
+            <div class="col-sm-8">
+                <select class="form-control" @onchange="SelectCompany" @onclick="IsSelecting">
+                    <option value=0>Choose</option>
+                    @if (companies == null)
+                    {
+                        <p>companies null</p>
+                    }
+                    else
+                    {
+                        @foreach (var company in companies)
+                        {
+                            <option value=@company.Id>@company.Name</option>
+                        }
+                    }
+                </select>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-sm-8">
+                <button type="button" class="btn btn-primary" @onclick="ChangeSitutation">Select</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+@if (selecting)
+{
+    @if (companyId != 0 && key)
+    {
+        <h3>List of warehouses</h3>
+
+        @if (offices == null)
+        {
+            <p><em>Loading...</em></p>
+        }
+        else
+        {
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Name</th>
+                        <th>Address</th>
+                        <th>Company Id</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @foreach (var office in offices) //UpdateWarehouse'dan veri gönder liste güncellenecek
+                    {
+                        @if (companyId == office.CompanyId)
+                        {
+                            <tr>
+                                <td>@office.Id</td>
+                                <td>@office.Name</td>
+                                <td>@office.Address</td>
+                                <td>@office.CompanyId</td>
+                                <td><button class="btn btn-primary" @onclick="(() => TakeId(office.Id))">Edit</button></td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        }
+
+        @if (key)
+        {
+            <EditForm Model="office1">
+                <DataAnnotationsValidator />
+
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Update Office </h5>
+                        <div class="form-group row">
+                            @{
+                                office1.Id = officeId;
+                            }
+                            <label class="col-sm-4 col-form-label">Office Id: <span class="font-weight-bold">@officeId</span></label>
+                        </div>
+
+                        <div class="form-group row">
+                            <label class="col-sm-4 col-form-label">Name</label>
+                            <div class="col-sm-8">
+                                <InputText id="name" class="form-control" placeholder="Office Name" @bind-Value="@office1.Name" />
+                                <span><ValidationMessage For="@(() => office1.Name)" /></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label class="col-sm-4 col-form-label">Address</label>
+                            <div class="col-sm-8">
+                                <InputText id="address" class="form-control" placeholder="Office Address" @bind-Value="@office1.Address" />
+                                <span><ValidationMessage For="@(() => office1.Address)" /></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label class="col-sm-4 col-form-label">Company Name: <span class="font-weight-bolder"></span></label>
+                            <div class="col-sm-8">
+                                <InputSelect @bind-Value="office1.CompanyId" class="form-control">
+                                    <option value=0>Choose</option>
+                                    @foreach (var company in companies)
+                                                {
+                                        <option value="@company.Id">@company.Name</option>
+                                                }
+                                </InputSelect>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <div class="col-sm-8">
+                                <button @onclick="@PutOffice" type="submit" class="btn btn-primary">Update Office</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </EditForm>
+        }
+    }
+    @if (companyId != 0 && !key)
+    {
+        @if (companyId != 0 && key)
+        {
+            <h3>List of warehouses</h3>
+
+            @if (offices == null)
+            {
+                <p><em>Loading...</em></p>
+            }
+            else
+            {
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Name</th>
+                            <th>Address</th>
+                            <th>Company Id</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @foreach (var office in offices) //UpdateWarehouse'dan veri gönder liste güncellenecek
+                        {
+                            @if (companyId == office.CompanyId)
+                            {
+                                <tr>
+                                    <td>@office.Id</td>
+                                    <td>@office.Name</td>
+                                    <td>@office.Address</td>
+                                    <td>@office.CompanyId</td>
+                                    <td><button class="btn btn-primary" @onclick="(() => TakeId(office.Id))">Edit</button></td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            }
+
+            @if (key)
+            {
+                <EditForm Model="office1">
+                    <DataAnnotationsValidator />
+
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Update Office </h5>
+                            <div class="form-group row">
+                                @{
+                                    office1.Id = officeId;
+                                }
+                                <label class="col-sm-4 col-form-label">Office Id: <span class="font-weight-bold">@officeId</span></label>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-sm-4 col-form-label">Name</label>
+                                <div class="col-sm-8">
+                                    <InputText id="name" class="form-control" placeholder="Office Name" @bind-Value="@office1.Name" />
+                                    <span><ValidationMessage For="@(() => office1.Name)" /></span>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-sm-4 col-form-label">Address</label>
+                                <div class="col-sm-8">
+                                    <InputText id="address" class="form-control" placeholder="Office Address" @bind-Value="@office1.Address" />
+                                    <span><ValidationMessage For="@(() => office1.Address)" /></span>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-sm-4 col-form-label">Company Name: <span class="font-weight-bolder"></span></label>
+                                <div class="col-sm-8">
+                                    <InputSelect @bind-Value="office1.CompanyId" class="form-control">
+                                        <option value=0>Choose</option>
+                                        @foreach (var company in companies)
+                                                        {
+                                            <option value="@company.Id">@company.Name</option>
+                                                        }
+                                    </InputSelect>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <div class="col-sm-8">
+                                    <button @onclick="@PutOffice" type="submit" class="btn btn-primary">Update Office</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </EditForm>
+            }
+        }
+    }
+}
+
+@code {
+    public Office office1 = new Office();
+    //variables for binding
+    public string companyIdString = "";
+    public int companyId = 0;
+    public int officeId = 0;
+
+
+    //variables for check situations to show list
+    public bool key = true;
+    public bool selecting = true;
+
+    public void IsSelecting()
+    {
+        selecting = false;
+    }
+    public void ChangeSitutation()
+    {
+        selecting = true;
+
+        if (key == true)
+        {
+            key = false;
+        }
+        else
+        {
+            key = true;
+        }
+    }
+    public void SelectCompany(ChangeEventArgs e)  //Selectform işi halletti
+    {
+        companyIdString = e.Value.ToString();
+        companyId = Int32.Parse(companyIdString);
+    }
+
+    private async Task PutOffice()
+    {
+        office1.Id = officeId;
+        var officeUpdate = offices.FirstOrDefault(x => x.Id == officeId);
+        officeUpdate.Name = office1.Name;
+        officeUpdate.Address = office1.Address;
+        officeUpdate.CompanyId = office1.CompanyId;
+        await Http.PutAsJsonAsync("api/companies", office1);
+    }
+
+    public void TakeId(int id)
+    {
+        officeId = id;
+        if (id != 0)
+        {
+            key = true;
+        }
+    }
+
+    public string companiesString;
+
+    //api consuming
+    public List<Company> companies;
+    public List<Office> offices;
+    protected override async Task OnInitializedAsync()
+    {
+        companies = await Http.GetFromJsonAsync<List<Company>>("api/CompanyInformations");
+        offices = await Http.GetFromJsonAsync<List<Office>>("api/Companies");
+        companiesString = await Http.GetStringAsync("api/CompanyInformations");
+    }
+}

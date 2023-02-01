@@ -1,0 +1,40 @@
+﻿@inject HttpClient Http
+
+<table class="table">
+    <thead class="bg-dark text-white">
+        <tr>
+            <th>Id</th>
+            <th>Product Name</th>
+            <th>Pieces</th>
+            <th>Price</th>
+            <th>Amount</th>
+            <th>InvoiceMaster Id</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var invoiceDetail in invoiceDetails)
+        {
+            <tr>
+                <td>@invoiceDetail.Id</td>
+                <td>@invoiceDetail.ProductName</td>
+                <td>@invoiceDetail.Pieces</td>
+                <td>@invoiceDetail.Price $</td>
+                <td>@invoiceDetail.Amount</td>
+                <td>@invoiceDetail.InvoiceMasterId</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@code {
+
+    [Parameter]
+    public int InvoiceMasterId { get; set; }
+
+    //Api consuming
+    public List<InvoiceDetail> invoiceDetails = new List<InvoiceDetail>();
+    protected override async Task OnInitializedAsync()
+    {
+        invoiceDetails = await Http.GetFromJsonAsync<List<InvoiceDetail>>($"api/InvoiceDetails/{InvoiceMasterId}");
+    }
+}

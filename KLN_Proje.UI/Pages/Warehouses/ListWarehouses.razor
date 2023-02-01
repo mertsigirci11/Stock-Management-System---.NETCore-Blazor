@@ -1,0 +1,44 @@
+﻿@inject HttpClient Http
+
+<h3>List of warehouses</h3>
+
+@if (warehouses == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Company Id</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var warehouse in warehouses)
+            {
+                <tr>
+                    <td>@warehouse.Id</td>
+                    <td>@warehouse.Name</td>
+                    <td>@warehouse.CompanyId</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    
+    public List<Warehouse> warehouses;
+
+    [Parameter]
+    public int companyId { get; set; }
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        warehouses = await Http.GetFromJsonAsync<List<Warehouse>>($"api/Warehouses/{companyId}");
+    }
+}

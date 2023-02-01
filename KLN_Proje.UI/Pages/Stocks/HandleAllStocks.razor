@@ -1,0 +1,274 @@
+﻿@page "/stocks"
+@inject HttpClient Http
+@inject NavigationManager UriHelper
+
+<h3>Stocks</h3>
+<button class="btn btn-success" @onclick="Creating">Create</button>
+<br />
+<br />
+@if (stocks == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    @if (key)
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Price</th>
+                    <th>Pieces</th>
+                    <th>Warehouse Id</th>
+                    <th><!--Edit--></th>
+                    <th><!--Delete--></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var stock in stocks)
+                {
+                    <tr>
+                        <td>@stock.Id</td>
+                        <td>@stock.Name</td>
+                        <td>@stock.Price</td>
+                        <td>@stock.Piece</td>
+                        <td>@stock.WarehouseId</td>
+                        <td><button class="btn btn-primary" @onclick="(() => TakeIdForEdit(stock.Id,stock.WarehouseId))">Edit</button></td>
+                        <td><button class="btn btn-danger" @onclick="(() => TakeIdForDelete(stock.Id, stock))">Delete</button></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Price</th>
+                    <th>Pieces</th>
+                    <th>Warehouse Id</th>
+                    <th><!--Edit--></th>
+                    <th><!--Delete--></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var stock in stocks)
+                {
+                    <tr>
+                        <td>@stock.Id</td>
+                        <td>@stock.Name</td>
+                        <td>@stock.Price</td>
+                        <td>@stock.Piece</td>
+                        <td>@stock.WarehouseId</td>
+                        <td><button class="btn btn-primary" @onclick="(() => TakeIdForEdit(stock.Id,stock.WarehouseId))">Edit</button></td>
+                        <td><button class="btn btn-danger" @onclick="(() => TakeIdForDelete(stock.Id, stock))">Delete</button></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+
+}
+
+@if (isEdit)
+{
+    <EditForm Model="stockForUpdate">
+        <DataAnnotationsValidator />
+
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Update Warehouse </h5>
+                <div class="form-group row">
+                    @{
+                        stockForUpdate.Id = stockId;
+                    }
+                    <label class="col-sm-4 col-form-label">Stock Id: <span class="font-weight-bold">@stockId</span></label>
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-sm-4 col-form-label">Name</label>
+                    <div class="col-sm-8">
+                        <InputText id="name" class="form-control" placeholder="Stock Name" @bind-Value="@stockForUpdate.Name" />
+                        <span><ValidationMessage For="@(() => stockForUpdate.Name)" /></span>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-sm-4 col-form-label">Price</label>
+                    <div class="col-sm-8">
+                        <InputNumber id="price" class="form-control" placeholder="Stock Price" @bind-Value="@stockForUpdate.Price" />
+                        <span><ValidationMessage For="@(() => stockForUpdate.Price)" /></span>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-sm-4 col-form-label">Piece</label>
+                    <div class="col-sm-8">
+                        <InputNumber id="piece" class="form-control" placeholder="Stock Piece" @bind-Value="@stockForUpdate.Piece" />
+                        <span><ValidationMessage For="@(() => stockForUpdate.Piece)" /></span>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-sm-4 col-form-label">Warehouse Name: <span class="font-weight-bolder"></span></label>
+                    <div class="col-sm-8">
+                        <InputSelect @bind-Value="stockForUpdate.WarehouseId" class="form-control">
+                            <option value=0>Choose</option>
+                            @foreach (var warehouse in warehouses)
+                                {
+                                <option value="@warehouse.Id">@warehouse.Name</option>
+                                }
+                        </InputSelect>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-sm-8">
+                        <button @onclick="@PutStock" type="submit" class="btn btn-primary">Update Stock</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </EditForm>
+
+}
+@if (isCreate)
+{
+    <h3>Add Stock</h3>
+    <EditForm Model="@stockForAdd">
+        <DataAnnotationsValidator />
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Add the Stock Credentials</h5>
+                <div class="form-group row">
+                    <label class="col-sm-4 col-form-label">Name</label>
+                    <div class="col-sm-8">
+                        <InputText id="name" class="form-control" placeholder="Stock Name" @bind-Value="@stockForAdd.Name" />
+                        <ValidationMessage For="@(() => stockForAdd.Name)" />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-4 col-form-label">Price</label>
+                    <div class="col-sm-8">
+                        <InputNumber id="price" class="form-control" placeholder="Stock Price" @bind-Value="@stockForAdd.Price" />
+                        <ValidationMessage For="@(() => stockForAdd.Price)" />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-4 col-form-label">Piece</label>
+                    <div class="col-sm-8">
+                        <InputNumber id="piece" class="form-control" placeholder="Stock Piece" @bind-Value="@stockForAdd.Piece" />
+                        <ValidationMessage For="@(() => stockForAdd.Piece)" />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-4 col-form-label">Warehouse Name: <span class="font-weight-bolder"></span></label>
+                    <div class="col-sm-8">
+                        <InputSelect @bind-Value="stockForAdd.WarehouseId" class="form-control">
+                            <option value=0>Choose</option>
+                            @foreach (var warehouse in warehouses)
+                                {
+                                <option value="@warehouse.Id">@warehouse.Name</option>
+                                }
+                        </InputSelect>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-sm-8">
+                        <button @onclick=@CreateStock type="submit" class="btn btn-primary">Save Stock</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </EditForm>
+}
+
+@code
+{
+    public List<Stock> stocks;
+    public List<Warehouse> warehouses;
+    public List<Stock> stocks2;
+    public bool isEdit = false;
+    public bool isCreate = false;
+    public bool key = true;
+    public int stockId = 0;
+    public int warehouseId = 0;
+    public string stocksString;
+    public string warehousesString;
+
+    public Stock stockForUpdate = new Stock();
+    public Stock stockForAdd = new Stock();
+    public Warehouse warehouse = new Warehouse();
+
+    public void TakeIdForEdit(int id, int _warehouseId)
+    {
+        stockId = id;
+        warehouseId = _warehouseId;
+        isEdit = true;
+        isCreate = false;
+    }
+
+    public void TakeIdForDelete(int id, Stock stock)
+    {
+        Http.DeleteAsync($"api/stocks/{id}");
+        stocks.Remove(stock);
+        UriHelper.NavigateTo("stocks");
+        isEdit = false;
+        isCreate = false;
+    }
+
+    private async void PutStock() //Liste güncellenecek
+    {
+        await Http.PutAsJsonAsync("api/stocks", stockForUpdate);
+
+        /*stocks2 = stocks.Where(x => x.Id == stockForUpdate.Id).ToList();
+        var x = stocks2.FirstOrDefault();
+        x.Name = stockForUpdate.Name;
+        x.Price = stockForUpdate.Price;
+        x.Piece = stockForUpdate.Piece;
+        x.WarehouseId = stockForUpdate.WarehouseId;
+
+        //var warehouseUpdate = warehousesFromParent.FirstOrDefault(x => x.Id == warehouseId);
+        var deneme = stocks2.FirstOrDefault(x => x.Id == stockForUpdate.Id);
+        deneme.Name = stockForUpdate.Name;
+        deneme.Price = stockForUpdate.Price;
+        deneme.Piece = stockForUpdate.Piece;
+        deneme.WarehouseId = stockForUpdate.WarehouseId;*/
+
+        isEdit = false;
+    }
+
+    public async void CreateStock()
+    {
+        await Http.PostAsJsonAsync("api/stocks", stockForAdd);
+        stocks.Add(stockForAdd);
+    }
+    public void StocktoBeSent(Stock stocksToBeSent)
+    {
+        var x = stocks.Find(x => x.Id == stocksToBeSent.Id);
+        x.WarehouseId = stocksToBeSent.WarehouseId;
+        x.Name = stocksToBeSent.Name;
+    }
+    public void IsCreate(bool key)
+    {
+        isCreate = key;
+    }
+
+    public void Creating()
+    {
+        isCreate = true;
+        isEdit = false;
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        stocks = await Http.GetFromJsonAsync<List<Stock>>("api/Stocks");
+        stocksString = await Http.GetStringAsync("api/Stocks");
+        warehouses = await Http.GetFromJsonAsync<List<Warehouse>>("api/Warehouses");
+    }
+}

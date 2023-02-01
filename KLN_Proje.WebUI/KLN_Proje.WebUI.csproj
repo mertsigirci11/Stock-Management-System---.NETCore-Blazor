@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="5.0.11" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="5.0.11" PrivateAssets="all" />
+    <PackageReference Include="System.Net.Http.Json" Version="5.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\KLN_Proje.Business\KLN_Proje.Business.csproj" />
+    <ProjectReference Include="..\KLN_Proje.DataAccess\KLN_Proje.DataAccess.csproj" />
+    <ProjectReference Include="..\KLN_Proje.Entities\KLN_Proje.Entities.csproj" />
+    <ProjectReference Include="..\KLN_Proje.WebAPI\KLN_Proje.WebAPI.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,85 @@
+﻿@inject HttpClient Http
+
+
+    <h3>List of warehouses</h3>
+
+    @if (warehouses == null)
+    {
+        <p><em>Loading...</em></p>
+    }
+    else
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Company Id</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @foreach (var warehouse in warehouses) //UpdateWarehouse'dan veri gönder liste güncellenecek
+                {
+                    @if (companyId == warehouse.CompanyId)
+                    {
+                        <tr>
+                            <td>@warehouse.Id</td>
+                            <td>@warehouse.Name</td>
+                            <td>@warehouse.CompanyId</td>
+                            <td><button class="btn btn-primary" @onclick="(() => TakeId(warehouse.Id))">Edit</button></td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    }
+
+    @if (key)
+    {
+        <UpdateWarehouse companyId="companyId" warehouseId="warehouseId" companiesString="@companiesString" warehosuesString="@warehosuesString" WarehouseToBeSent="WarehousetoBeSent"></UpdateWarehouse>
+    }
+
+    @code {
+
+
+        public bool key = false;
+
+        public int warehouseId = 0;
+
+        public List<Warehouse> warehouses;
+
+        public string warehosuesString;
+
+        public Warehouse WarehouseForUpdateList { get; set; }
+
+        [Parameter]
+        public int companyId { get; set; }
+
+        [Parameter]
+        public string companiesString { get; set; }
+
+        public void TakeId(int id)
+        {
+            warehouseId = id;
+            if (id != 0)
+            {
+                key = true;
+            }
+        }
+
+        public void WarehousetoBeSent(Warehouse warehousesToBeSent)
+        {
+            var x = warehouses.Find(x => x.Id == warehousesToBeSent.Id);
+            x.CompanyId = warehousesToBeSent.CompanyId;
+            x.Name = warehousesToBeSent.Name;
+        }
+
+
+        protected override async Task OnInitializedAsync()
+        {
+            warehosuesString = await Http.GetStringAsync("api/Warehouses");
+            warehouses = await Http.GetFromJsonAsync<List<Warehouse>>($"api/Warehouses/{companyId}");
+        }
+    }

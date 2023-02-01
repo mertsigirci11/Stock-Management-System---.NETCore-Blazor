@@ -1,0 +1,34 @@
+C:\Users\Mert Sigirci\Desktop\KLN_Proje\KLN_Proje.Business\obj\Debug\net5.0\KLN_Proje.Business.csproj.AssemblyReference.cache
+C:\Users\Mert Sigirci\Desktop\KLN_Proje\KLN_Proje.Business\obj\Debug\net5.0\KLN_Proje.Business.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Mert Sigirci\Desktop\KLN_Proje\KLN_Proje.Business\obj\Debug\net5.0\KLN_Proje.Business.AssemblyInfoInputs.cache
+C:\Users\Mert Sigirci\Desktop\KLN_Proje\KLN_Proje.Business\obj\Debug\net5.0\KLN_Proje.Business.AssemblyInfo.cs
+C:\Users\Mert Sigirci\Desktop\KLN_Proje\KLN_Proje.Business\obj\Debug\net5.0\KLN_Proje.Business.csproj.CoreCompileInputs.cache
+C:\Users\Mert Sigirci\Desktop\KLN_Proje\KLN_Proje.Business\bin\Debug\net5.0\KLN_Proje.Business.deps.json
+C:\Users\Mert Sigirci\Desktop\KLN_Proje\KLN_Proje.Business\bin\Debug\net5.0\KLN_Proje.Business.dll
+C:\Users\Mert Sigirci\Desktop\KLN_Proje\KLN_Proje.Business\bin\Debug\net5.0\ref\KLN_Proje.Business.dll
+C:\Users\Mert Sigirci\Desktop\KLN_Proje\KLN_Proje.Business\bin\Debug\net5.0\KLN_Proje.Business.pdb
+C:\Users\Mert Sigirci\Desktop\KLN_Proje\KLN_Proje.Business\bin\Debug\net5.0\KLN_Proje.DataAccess.dll
+C:\Users\Mert Sigirci\Desktop\KLN_Proje\KLN_Proje.Business\bin\Debug\net5.0\KLN_Proje.Entities.dll
+C:\Users\Mert Sigirci\Desktop\KLN_Proje\KLN_Proje.Business\bin\Debug\net5.0\KLN_Proje.DataAccess.pdb
+C:\Users\Mert Sigirci\Desktop\KLN_Proje\KLN_Proje.Business\bin\Debug\net5.0\KLN_Proje.Entities.pdb
+C:\Users\Mert Sigirci\Desktop\KLN_Proje\KLN_Proje.Business\obj\Debug\net5.0\KLN_Proje.Business.dll
+C:\Users\Mert Sigirci\Desktop\KLN_Proje\KLN_Proje.Business\obj\Debug\net5.0\ref\KLN_Proje.Business.dll
+C:\Users\Mert Sigirci\Desktop\KLN_Proje\KLN_Proje.Business\obj\Debug\net5.0\KLN_Proje.Business.pdb
+C:\Users\Mert Sigirci\Desktop\KLN_Proje\KLN_Proje.Business\obj\Debug\net5.0\KLN_Proje.Business.csproj.CopyComplete
+C:\Users\Mert Sigirci\Desktop\KLN\KLN CRUD (.NET-Web Assembly) Website\KLN_Proje\KLN_Proje.Business\bin\Debug\net5.0\KLN_Proje.Business.deps.json
+C:\Users\Mert Sigirci\Desktop\KLN\KLN CRUD (.NET-Web Assembly) Website\KLN_Proje\KLN_Proje.Business\bin\Debug\net5.0\KLN_Proje.Business.dll
+C:\Users\Mert Sigirci\Desktop\KLN\KLN CRUD (.NET-Web Assembly) Website\KLN_Proje\KLN_Proje.Business\bin\Debug\net5.0\ref\KLN_Proje.Business.dll
+C:\Users\Mert Sigirci\Desktop\KLN\KLN CRUD (.NET-Web Assembly) Website\KLN_Proje\KLN_Proje.Business\bin\Debug\net5.0\KLN_Proje.Business.pdb
+C:\Users\Mert Sigirci\Desktop\KLN\KLN CRUD (.NET-Web Assembly) Website\KLN_Proje\KLN_Proje.Business\bin\Debug\net5.0\KLN_Proje.DataAccess.dll
+C:\Users\Mert Sigirci\Desktop\KLN\KLN CRUD (.NET-Web Assembly) Website\KLN_Proje\KLN_Proje.Business\bin\Debug\net5.0\KLN_Proje.Entities.dll
+C:\Users\Mert Sigirci\Desktop\KLN\KLN CRUD (.NET-Web Assembly) Website\KLN_Proje\KLN_Proje.Business\bin\Debug\net5.0\KLN_Proje.DataAccess.pdb
+C:\Users\Mert Sigirci\Desktop\KLN\KLN CRUD (.NET-Web Assembly) Website\KLN_Proje\KLN_Proje.Business\bin\Debug\net5.0\KLN_Proje.Entities.pdb
+C:\Users\Mert Sigirci\Desktop\KLN\KLN CRUD (.NET-Web Assembly) Website\KLN_Proje\KLN_Proje.Business\obj\Debug\net5.0\KLN_Proje.Business.csproj.AssemblyReference.cache
+C:\Users\Mert Sigirci\Desktop\KLN\KLN CRUD (.NET-Web Assembly) Website\KLN_Proje\KLN_Proje.Business\obj\Debug\net5.0\KLN_Proje.Business.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Mert Sigirci\Desktop\KLN\KLN CRUD (.NET-Web Assembly) Website\KLN_Proje\KLN_Proje.Business\obj\Debug\net5.0\KLN_Proje.Business.AssemblyInfoInputs.cache
+C:\Users\Mert Sigirci\Desktop\KLN\KLN CRUD (.NET-Web Assembly) Website\KLN_Proje\KLN_Proje.Business\obj\Debug\net5.0\KLN_Proje.Business.AssemblyInfo.cs
+C:\Users\Mert Sigirci\Desktop\KLN\KLN CRUD (.NET-Web Assembly) Website\KLN_Proje\KLN_Proje.Business\obj\Debug\net5.0\KLN_Proje.Business.csproj.CoreCompileInputs.cache
+C:\Users\Mert Sigirci\Desktop\KLN\KLN CRUD (.NET-Web Assembly) Website\KLN_Proje\KLN_Proje.Business\obj\Debug\net5.0\KLN_Proje.Business.csproj.CopyComplete
+C:\Users\Mert Sigirci\Desktop\KLN\KLN CRUD (.NET-Web Assembly) Website\KLN_Proje\KLN_Proje.Business\obj\Debug\net5.0\KLN_Proje.Business.dll
+C:\Users\Mert Sigirci\Desktop\KLN\KLN CRUD (.NET-Web Assembly) Website\KLN_Proje\KLN_Proje.Business\obj\Debug\net5.0\ref\KLN_Proje.Business.dll
+C:\Users\Mert Sigirci\Desktop\KLN\KLN CRUD (.NET-Web Assembly) Website\KLN_Proje\KLN_Proje.Business\obj\Debug\net5.0\KLN_Proje.Business.pdb

@@ -1,0 +1,58 @@
+﻿@inject HttpClient Http
+@inject NavigationManager UriHelper
+
+<h3>Add Warehouse</h3>
+
+<!--<div class="card">
+    <div class="card-body">
+        <h5 class="card-title">Add Warehouse</h5>
+        <div class="form-group row">
+            <label class="col-sm-4 col-form-label">Name</label>
+            <div class="col-sm-8">
+                <input @bind="@warehouse.Name" for="@warehouse.Name" type="text" class="form-control" id="name" placeholder="Name" />
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="col-sm-8">
+                <button @onclick=@CreateWarehouse type="button" class="btn btn-primary">Save Warehouse</button>
+            </div>
+        </div>
+    </div>
+</div>-->
+
+<EditForm Model="@warehouse">
+    <DataAnnotationsValidator />
+
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Add Warehouse</h5>
+            <div class="form-group row">
+                <label class="col-sm-4 col-form-label">Name</label>
+                <div class="col-sm-8">
+                    <InputText id="name" class="form-control" placeholder="Warehouse Name" @bind-Value="@warehouse.Name" />
+                    <ValidationMessage For="@(() => warehouse.Name)" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-sm-8">
+                    <button @onclick="@CreateWarehouse" type="submit" class="btn btn-primary">Save Warehouse</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</EditForm>
+
+@code {
+    public Warehouse warehouse = new Warehouse();
+
+    [Parameter]
+    public int companyId { get; set; }
+
+    private async Task CreateWarehouse()
+    {
+        warehouse.CompanyId = companyId;
+        await Http.PostAsJsonAsync("api/warehouses", warehouse);
+        //UriHelper.NavigateTo("warehouse-list-by-id");
+    }
+}

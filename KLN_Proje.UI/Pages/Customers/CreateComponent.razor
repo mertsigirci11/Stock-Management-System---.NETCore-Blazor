@@ -1,0 +1,73 @@
+﻿@inject HttpClient Http
+@inject NavigationManager UriHelper
+<h3>Create Component</h3>
+
+<EditForm Model="@customer">
+    <DataAnnotationsValidator />
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Add Customer Credentials</h5>
+            <div class="form-group row">
+                <label class="col-sm-4 col-form-label">Name</label>
+                <div class="col-sm-8">
+                    <InputText id="name" class="form-control" placeholder="Customer Name" @bind-Value="@customer.Name" />
+                    <ValidationMessage For="@(() => customer.Name)" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-4 col-form-label">Surname</label>
+                <div class="col-sm-8">
+                    <InputText id="surname" class="form-control" placeholder="Surname" @bind-Value="@customer.Surname" />
+                    <ValidationMessage For="@(() => customer.Surname)" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-4 col-form-label">Username</label>
+                <div class="col-sm-8">
+                    <InputText id="username" class="form-control" placeholder="Username" @bind-Value="@customer.Username" />
+                    <ValidationMessage For="@(() => customer.Username)" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-4 col-form-label">Password</label>
+                <div class="col-sm-8">
+                    <input @bind="@customer.Password" for="@customer.Password" type="password" class="form-control" id="password" placeholder="Password" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-4 col-form-label">Tax Administration</label>
+                <div class="col-sm-8">
+                    <InputText id="taxadministration" class="form-control" placeholder="Tax Administration" @bind-Value="@customer.TaxAdministration" />
+                    <ValidationMessage For="@(() => customer.TaxAdministration)" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-4 col-form-label">Bank Account Number</label>
+                <div class="col-sm-8">
+                    <InputText id="bankaccountnumber" class="form-control" placeholder="Bank Account Number" @bind-Value="@customer.BankAccountNumber" />
+                    <ValidationMessage For="@(() => customer.BankAccountNumber)" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-sm-8">
+                    <button @onclick=@CreateCustomer type="button" class="btn btn-primary">Save Customer</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</EditForm>
+
+
+@code {
+    public Customer customer = new Customer();
+
+    [CascadingParameter] BlazoredModalInstance BlazoredModal { get; set; } = default!;
+    async Task Cancel() => BlazoredModal.Cancel();
+
+    public async void CreateCustomer()
+    {
+        await Http.PostAsJsonAsync<Customer>("api/Customers", customer);
+        BlazoredModal.Close();
+        UriHelper.NavigateTo("customer-manage1");
+    }
+}

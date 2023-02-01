@@ -1,0 +1,59 @@
+﻿@inject HttpClient Http
+@inject IModalService Modal
+<h3>
+    Filter By Company
+</h3>
+
+<br />
+
+
+
+<EditForm Model="companyId">
+    <div class="form-group row">
+        <label class="col-sm-4 col-form-label">Company Name: <span class="font-weight-bolder"></span></label>
+        <div class="col-sm-8">
+            <InputSelect @bind-Value="companyId" class="form-control">
+                <option value=0>Choose</option>
+                @foreach (var company in Companies)
+                {
+                    <option value="@company.Id">@company.Name</option>
+                }
+            </InputSelect>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-sm-8">
+            <button @onclick="@(()=> TakeCompanyId(companyId))" type="submit" class="btn btn-primary">OK</button>
+            <button @onclick="Cancel" class="btn btn-secondary">Cancel</button>
+        </div>
+    </div>
+</EditForm>
+
+
+
+@code
+{
+    public int companyId = 0;
+
+    [CascadingParameter] BlazoredModalInstance BlazoredModal { get; set; } = default!;
+
+
+    public void TakeCompanyId(int id)
+    {
+        companyId = id;
+        BlazoredModal.Close(ModalResult.Ok(companyId));
+
+    }
+    async Task Cancel() => BlazoredModal.Cancel();
+
+
+    //api consuming
+    public List<Office> Offices = new List<Office>();
+    public List<Company> Companies = new List<Company>();
+    protected override async Task OnInitializedAsync()
+    {
+        Offices = await Http.GetFromJsonAsync<List<Office>>("api/Companies");
+        Companies = await Http.GetFromJsonAsync<List<Company>>("api/CompanyInformations");
+    }
+}

@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\KLN_Proje.DataAccess\KLN_Proje.DataAccess.csproj" />
+    <ProjectReference Include="..\KLN_Proje.Entities\KLN_Proje.Entities.csproj" />
+  </ItemGroup>
+
+</Project>

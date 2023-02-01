@@ -1,0 +1,180 @@
+﻿@page "/office"
+@inject NavigationManager UriHelper
+<h3>Office</h3>
+<button class="btn btn-primary" @onclick="NavigateTo">Show All Offices</button>
+<br />
+
+<div class="container-fluid">
+    <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+
+        <div class="row mb-3">
+
+            <div class="col-xl-3 col-sm-6 py-2">
+                <a style="padding:0px;margin:0px;text-decoration:none" href="office-list-by-id">
+                    <div class="card text-white bg-info h-100">
+                        <div class="card-body bg-info">
+                            <div class="rotate">
+                                <i class="fa fa-user fa-4x"></i>
+                            </div>
+                            <h6 class="text-uppercase">List Offices</h6>
+                            <p class="font-weight-bold">List Offices By Id</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+
+            <div class="col-xl-3 col-sm-6 py-2">
+                <a style="padding:0px;margin:0px;text-decoration:none" href="office-add-by-id">
+                    <div class="card bg-success text-white h-100">
+                        <div class="card-body bg-success">
+                            <div class="rotate">
+                                <i class="fa fa-list fa-4x"></i>
+                            </div>
+                            <h6 class="text-uppercase">Create Office</h6>
+                            <p class="font-weight-bold">Create Office By Id</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+
+
+            <div class="col-xl-3 col-sm-6 py-2">
+                <a style="padding:0px;margin:0px;text-decoration:none" href="office-update-by-id">
+                    <div class="card text-white bg-warning h-100">
+                        <div class="card-body">
+                            <div class="rotate">
+                                <i class="fa fa-building fa-4x"></i>
+                            </div>
+                            <h6 class="text-uppercase">Update Office</h6>
+                            <p class="font-weight-bold">Update Office By Id</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+
+
+            <div class="col-xl-3 col-sm-6 py-2">
+                <a style="padding:0px;margin:0px;text-decoration:none" href="office-delete-by-id">
+                    <div class="card text-white bg-danger h-100">
+                        <div class="card-body bg-danger">
+                            <div class="rotate">
+                                <i class="fa fa-city fa-4x"></i>
+                            </div>
+                            <h6 class="text-uppercase">Delete Office</h6>
+                            <p class="font-weight-bold">Delete Office By Id</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+
+        </div>
+        <!--
+        <div class="row mb-3">
+
+
+            <div class="col-xl-3 col-sm-6 py-2">
+                <a style="padding:0px;margin:0px;text-decoration:none" href="">
+                    <div class="card text-white bg-info h-100">
+                        <div class="card-body bg-info">
+                            <div class="rotate">
+                                <i class="fa fa-user fa-4x"></i>
+                            </div>
+                            <h6 class="text-uppercase">List Warehouses</h6>
+                            <p class="font-weight-bold">All Warehouses</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+
+
+            <div class="col-xl-3 col-sm-6 py-2">
+                <a style="padding:0px;margin:0px;text-decoration:none" href="">
+                    <div class="card bg-success text-white h-100">
+                        <div class="card-body bg-success">
+                            <div class="rotate">
+                                <i class="fa fa-list fa-4x"></i>
+                            </div>
+                            <h6 class="text-uppercase">Create Warehouse</h6>
+                            <p class="font-weight-bold">Generic Creating</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+
+
+            <div class="col-xl-3 col-sm-6 py-2">
+                <a style="padding:0px;margin:0px;text-decoration:none" href="">
+                    <div class="card text-white bg-warning h-100">
+                        <div class="card-body">
+                            <div class="rotate">
+                                <i class="fa fa-building fa-4x"></i>
+                            </div>
+                            <h6 class="text-uppercase">Update Warehouse</h6>
+                            <p class="font-weight-bold">Generic Updating</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+
+
+            <div class="col-xl-3 col-sm-6 py-2">
+                <a style="padding:0px;margin:0px;text-decoration:none" href="">
+                    <div class="card text-white bg-danger h-100">
+                        <div class="card-body bg-danger">
+                            <div class="rotate">
+                                <i class="fa fa-city fa-4x"></i>
+                            </div>
+                            <h6 class="text-uppercase">Delete Warehouse</h6>
+                            <p class="font-weight-bold">Generic Deleting</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+
+        </div>-->
+
+        <style>
+            .card {
+                overflow: hidden;
+            }
+
+            .card-body .rotate {
+                z-index: 8;
+                float: right;
+                height: 100%;
+            }
+
+                .card-body .rotate i {
+                    color: rgba(20, 20, 20, 0.15);
+                    position: absolute;
+                    left: 0;
+                    left: auto;
+                    right: -10px;
+                    bottom: 0;
+                    display: block;
+                    -webkit-transform: rotate(-44deg);
+                    -moz-transform: rotate(-44deg);
+                    -o-transform: rotate(-44deg);
+                    -ms-transform: rotate(-44deg);
+                    transform: rotate(-44deg);
+                }
+        </style>
+    </div>
+</div>
+
+
+@code
+{
+    public void NavigateTo()
+    {
+        UriHelper.NavigateTo("offices");
+    }
+}

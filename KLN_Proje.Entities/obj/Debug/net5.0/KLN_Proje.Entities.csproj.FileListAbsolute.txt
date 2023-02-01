@@ -1,0 +1,24 @@
+C:\Users\Mert Sigirci\Desktop\KLN_Proje\KLN_Proje.Entities\bin\Debug\net5.0\KLN_Proje.Entities.deps.json
+C:\Users\Mert Sigirci\Desktop\KLN_Proje\KLN_Proje.Entities\bin\Debug\net5.0\KLN_Proje.Entities.dll
+C:\Users\Mert Sigirci\Desktop\KLN_Proje\KLN_Proje.Entities\bin\Debug\net5.0\ref\KLN_Proje.Entities.dll
+C:\Users\Mert Sigirci\Desktop\KLN_Proje\KLN_Proje.Entities\bin\Debug\net5.0\KLN_Proje.Entities.pdb
+C:\Users\Mert Sigirci\Desktop\KLN_Proje\KLN_Proje.Entities\obj\Debug\net5.0\KLN_Proje.Entities.csproj.AssemblyReference.cache
+C:\Users\Mert Sigirci\Desktop\KLN_Proje\KLN_Proje.Entities\obj\Debug\net5.0\KLN_Proje.Entities.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Mert Sigirci\Desktop\KLN_Proje\KLN_Proje.Entities\obj\Debug\net5.0\KLN_Proje.Entities.AssemblyInfoInputs.cache
+C:\Users\Mert Sigirci\Desktop\KLN_Proje\KLN_Proje.Entities\obj\Debug\net5.0\KLN_Proje.Entities.AssemblyInfo.cs
+C:\Users\Mert Sigirci\Desktop\KLN_Proje\KLN_Proje.Entities\obj\Debug\net5.0\KLN_Proje.Entities.csproj.CoreCompileInputs.cache
+C:\Users\Mert Sigirci\Desktop\KLN_Proje\KLN_Proje.Entities\obj\Debug\net5.0\KLN_Proje.Entities.dll
+C:\Users\Mert Sigirci\Desktop\KLN_Proje\KLN_Proje.Entities\obj\Debug\net5.0\ref\KLN_Proje.Entities.dll
+C:\Users\Mert Sigirci\Desktop\KLN_Proje\KLN_Proje.Entities\obj\Debug\net5.0\KLN_Proje.Entities.pdb
+C:\Users\Mert Sigirci\Desktop\KLN\KLN CRUD (.NET-Web Assembly) Website\KLN_Proje\KLN_Proje.Entities\bin\Debug\net5.0\KLN_Proje.Entities.deps.json
+C:\Users\Mert Sigirci\Desktop\KLN\KLN CRUD (.NET-Web Assembly) Website\KLN_Proje\KLN_Proje.Entities\bin\Debug\net5.0\KLN_Proje.Entities.dll
+C:\Users\Mert Sigirci\Desktop\KLN\KLN CRUD (.NET-Web Assembly) Website\KLN_Proje\KLN_Proje.Entities\bin\Debug\net5.0\ref\KLN_Proje.Entities.dll
+C:\Users\Mert Sigirci\Desktop\KLN\KLN CRUD (.NET-Web Assembly) Website\KLN_Proje\KLN_Proje.Entities\bin\Debug\net5.0\KLN_Proje.Entities.pdb
+C:\Users\Mert Sigirci\Desktop\KLN\KLN CRUD (.NET-Web Assembly) Website\KLN_Proje\KLN_Proje.Entities\obj\Debug\net5.0\KLN_Proje.Entities.csproj.AssemblyReference.cache
+C:\Users\Mert Sigirci\Desktop\KLN\KLN CRUD (.NET-Web Assembly) Website\KLN_Proje\KLN_Proje.Entities\obj\Debug\net5.0\KLN_Proje.Entities.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Mert Sigirci\Desktop\KLN\KLN CRUD (.NET-Web Assembly) Website\KLN_Proje\KLN_Proje.Entities\obj\Debug\net5.0\KLN_Proje.Entities.AssemblyInfoInputs.cache
+C:\Users\Mert Sigirci\Desktop\KLN\KLN CRUD (.NET-Web Assembly) Website\KLN_Proje\KLN_Proje.Entities\obj\Debug\net5.0\KLN_Proje.Entities.AssemblyInfo.cs
+C:\Users\Mert Sigirci\Desktop\KLN\KLN CRUD (.NET-Web Assembly) Website\KLN_Proje\KLN_Proje.Entities\obj\Debug\net5.0\KLN_Proje.Entities.csproj.CoreCompileInputs.cache
+C:\Users\Mert Sigirci\Desktop\KLN\KLN CRUD (.NET-Web Assembly) Website\KLN_Proje\KLN_Proje.Entities\obj\Debug\net5.0\KLN_Proje.Entities.dll
+C:\Users\Mert Sigirci\Desktop\KLN\KLN CRUD (.NET-Web Assembly) Website\KLN_Proje\KLN_Proje.Entities\obj\Debug\net5.0\ref\KLN_Proje.Entities.dll
+C:\Users\Mert Sigirci\Desktop\KLN\KLN CRUD (.NET-Web Assembly) Website\KLN_Proje\KLN_Proje.Entities\obj\Debug\net5.0\KLN_Proje.Entities.pdb

@@ -1,0 +1,103 @@
+﻿@inject HttpClient Http
+<h3>Edit Component</h3>
+
+
+<EditForm Model="@customerForUpdate">
+
+    <DataAnnotationsValidator />
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Update Customer Credentials</h5>
+            <h3>Customer Id: <span style="font-weight:800">@CustomerId</span></h3>
+            <div class="form-group row">
+                <label class="col-sm-4 col-form-label">Name</label>
+                <div class="col-sm-8">
+
+                    <InputText id="name" class="form-control" placeholder="Customer Name" @bind-Value="@customerForUpdate.Name" />
+                    <ValidationMessage For="@(() => customerForUpdate.Name)" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-4 col-form-label">Surname</label>
+                <div class="col-sm-8">
+                    <InputText id="surname" class="form-control" placeholder="Surname" @bind-Value="@customerForUpdate.Surname" />
+                    <ValidationMessage For="@(() => customerForUpdate.Surname)" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-4 col-form-label">Username</label>
+                <div class="col-sm-8">
+                    <InputText id="username" class="form-control" placeholder="Username" @bind-Value="@customerForUpdate.Username" />
+                    <ValidationMessage For="@(() => customerForUpdate.Username)" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-4 col-form-label">Password</label>
+                <div class="col-sm-8">
+                    <input @bind="@customerForUpdate.Password" for="@customerForUpdate.Password" type="password" class="form-control" id="password" placeholder="Password" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-4 col-form-label">Tax Administration</label>
+                <div class="col-sm-8">
+                    <InputText id="taxadministration" class="form-control" placeholder="Tax Administration" @bind-Value="@customerForUpdate.TaxAdministration" />
+                    <ValidationMessage For="@(() => customerForUpdate.TaxAdministration)" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-4 col-form-label">Bank Account Number</label>
+                <div class="col-sm-8">
+                    <InputText id="bankaccountnumber" class="form-control" placeholder="Bank Account Number" @bind-Value="@customerForUpdate.BankAccountNumber" />
+                    <ValidationMessage For="@(() => customerForUpdate.BankAccountNumber)" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-sm-8">
+                    <button @onclick=@UpdateCustomer type="button" class="btn btn-primary">Update Customer</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</EditForm>
+
+
+@code {
+    public Customer customerForUpdate = new Customer();
+
+    [Parameter] public int CustomerId { get; set; }
+
+    [CascadingParameter] BlazoredModalInstance BlazoredModal { get; set; } = default!;
+    async Task Cancel() => BlazoredModal.Cancel();
+
+    public async void UpdateCustomer()
+    {
+        customerForUpdate.Id = CustomerId;
+        customers.Where(x => x.Id == CustomerId).FirstOrDefault().Id = customerForUpdate.Id;
+        customers.Where(x => x.Id == CustomerId).FirstOrDefault().Name = customerForUpdate.Name;
+        customers.Where(x => x.Id == CustomerId).FirstOrDefault().Surname = customerForUpdate.Surname;
+        customers.Where(x => x.Id == CustomerId).FirstOrDefault().Username = customerForUpdate.Username;
+        customers.Where(x => x.Id == CustomerId).FirstOrDefault().Password = customerForUpdate.Password;
+        customers.Where(x => x.Id == CustomerId).FirstOrDefault().TaxAdministration = customerForUpdate.TaxAdministration;
+        customers.Where(x => x.Id == CustomerId).FirstOrDefault().BankAccountNumber = customerForUpdate.BankAccountNumber;
+        string customerString = $"{customerForUpdate.Id},{customerForUpdate.Name},{customerForUpdate.Surname},{customerForUpdate.Username},{customerForUpdate.Password},{customerForUpdate.TaxAdministration},{customerForUpdate.BankAccountNumber}";
+        await Http.PutAsJsonAsync<Customer>("api/Customers", customerForUpdate);
+        BlazoredModal.Close(ModalResult.Ok(customerString));
+    }
+
+    //api consuming
+    private List<Customer> customers;
+    public Customer customer = new Customer();
+    protected override async Task OnInitializedAsync()
+    {
+        customers = await Http.GetFromJsonAsync<List<Customer>>("api/Customers");
+        customer = customers.Where(x => x.Id == CustomerId).FirstOrDefault();
+        
+        var x = customers.Where(x => x.Id == CustomerId).FirstOrDefault();
+        customerForUpdate.Name = x.Name;
+        customerForUpdate.Surname = x.Surname;
+        customerForUpdate.Username = x.Username;
+        customerForUpdate.Password = x.Password;
+        customerForUpdate.BankAccountNumber = x.BankAccountNumber;
+        customerForUpdate.TaxAdministration = x.TaxAdministration;
+    }
+}

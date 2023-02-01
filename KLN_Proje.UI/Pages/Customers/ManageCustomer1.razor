@@ -1,0 +1,311 @@
+﻿@page "/customer-manage1"
+@inject HttpClient Http
+@inject NavigationManager UriHelper
+@inject IModalService Modal
+
+<h3>
+    Manage Customers
+    <a href="list-invoices-by-id">
+        <button class="btn" style="background-color:orange">
+            <span style="font-weight:700; color:white">Back To Invoices</span>
+        </button>
+    </a>
+
+    <button class="btn" style="background-color:lawngreen; float:right">
+        <span style="font-weight:700; color:white">Create</span>
+    </button>
+</h3>
+@if (isChange)
+{
+    @if (customers == null)
+    {
+        <p><em>Loading...</em></p>
+    }
+    else
+    {
+        <table class="table">
+            <thead class="bg-dark text-white">
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Surname</th>
+                    <th>username</th>
+                    <th>Password</th>
+                    <th>Tax Administration</th>
+                    <th>Bank Account Number</th>
+                    <th><!--Edit--></th>
+                    <th><!--Delete--></th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @foreach (var customer in customers)
+                {
+                    <tr>
+                        <td>@customer.Id</td>
+                        <td>@customer.Name</td>
+                        <td>@customer.Surname</td>
+                        <td>@customer.Username</td>
+                        <td>@customer.Password</td>
+                        <td>@customer.TaxAdministration</td>
+                        <td>@customer.BankAccountNumber</td>
+                        <td><button class="btn btn-info" @onclick="@(()=> ShowTheEditModal(customer.Id))">Edit</button></td>
+                        <td><button class="btn btn-danger" @onclick="(() => TakeIdForDelete(customer.Id))">Delete</button></td>
+                    </tr>
+                }
+
+
+
+            </tbody>
+        </table>
+    }
+}
+else
+{
+    @if (customers == null)
+    {
+        <p><em>Loading...</em></p>
+    }
+    else
+    {
+        <table class="table">
+            <thead class="bg-dark text-white">
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Surname</th>
+                    <th>username</th>
+                    <th>Password</th>
+                    <th>Tax Administration</th>
+                    <th>Bank Account Number</th>
+                    <th><!--Edit--></th>
+                    <th><!--Delete--></th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @foreach (var customer in customers)
+                {
+                    <tr>
+                        <td>@customer.Id</td>
+                        <td>@customer.Name</td>
+                        <td>@customer.Surname</td>
+                        <td>@customer.Username</td>
+                        <td>@customer.Password</td>
+                        <td>@customer.TaxAdministration</td>
+                        <td>@customer.BankAccountNumber</td>
+                        <td><button class="btn btn-info" @onclick="@(()=> ShowTheEditModal(customer.Id))">Edit</button></td>
+                        <td><button class="btn btn-danger" @onclick="(() => TakeIdForDelete(customer.Id))">Delete</button></td>
+                    </tr>
+                }
+
+
+
+            </tbody>
+        </table>
+    }
+}
+@*if (customers == null)
+    {
+        <p><em>Loading...</em></p>
+    }
+    else
+    {
+        <table class="table">
+            <thead class="bg-dark text-white">
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Surname</th>
+                    <th>username</th>
+                    <th>Password</th>
+                    <th>Tax Administration</th>
+                    <th>Bank Account Number</th>
+                    <th><!--Edit--></th>
+                    <th><!--Delete--></th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @foreach (var customer in customers)
+                {
+                    <tr>
+                        <td>@customer.Id</td>
+                        <td>@customer.Name</td>
+                        <td>@customer.Surname</td>
+                        <td>@customer.Username</td>
+                        <td>@customer.Password</td>
+                        <td>@customer.TaxAdministration</td>
+                        <td>@customer.BankAccountNumber</td>
+                        <td><button class="btn btn-info" @onclick="@(()=> ShowTheEditModal(customer.Id))">Edit</button></td>
+                        <td><button class="btn btn-danger" @onclick="(() => TakeIdForDelete(customer.Id))">Delete</button></td>
+                    </tr>
+                }
+
+
+
+            </tbody>
+        </table>
+    }*@
+
+@*if (isEdit)
+    {
+        <EditForm Model="@customerForUpdate">
+            <DataAnnotationsValidator />
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Update Customer Credentials</h5>
+                    <h3>Customer Id: <span style="font-weight:800">@customerId</span></h3>
+                    <div class="form-group row">
+                        <label class="col-sm-4 col-form-label">Name</label>
+                        <div class="col-sm-8">
+                            <InputText id="name" class="form-control" placeholder="Customer Name" @bind-Value="@customerForUpdate.Name" />
+                            <ValidationMessage For="@(() => customerForUpdate.Name)" />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-4 col-form-label">Surname</label>
+                        <div class="col-sm-8">
+                            <InputText id="surname" class="form-control" placeholder="Surname" @bind-Value="@customerForUpdate.Surname" />
+                            <ValidationMessage For="@(() => customerForUpdate.Surname)" />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-4 col-form-label">Username</label>
+                        <div class="col-sm-8">
+                            <InputText id="username" class="form-control" placeholder="Username" @bind-Value="@customerForUpdate.Username" />
+                            <ValidationMessage For="@(() => customerForUpdate.Username)" />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-4 col-form-label">Password</label>
+                        <div class="col-sm-8">
+                            <input @bind="@customerForUpdate.Password" for="@customerForUpdate.Password" type="password" class="form-control" id="password" placeholder="Password" />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-4 col-form-label">Tax Administration</label>
+                        <div class="col-sm-8">
+                            <InputText id="taxadministration" class="form-control" placeholder="Tax Administration" @bind-Value="@customerForUpdate.TaxAdministration" />
+                            <ValidationMessage For="@(() => customerForUpdate.TaxAdministration)" />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-4 col-form-label">Bank Account Number</label>
+                        <div class="col-sm-8">
+                            <InputText id="bankaccountnumber" class="form-control" placeholder="Bank Account Number" @bind-Value="@customerForUpdate.BankAccountNumber" />
+                            <ValidationMessage For="@(() => customerForUpdate.BankAccountNumber)" />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-sm-8">
+                            <button @onclick=@UpdateCustomer type="button" class="btn btn-primary">Update Customer</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </EditForm>
+    }*@
+
+@if (isDelete)
+{
+    <DeleteDialogBox Title="WARNING !!!" Text="Are you sure for delete operation?" OnClose="OnClose"></DeleteDialogBox>
+}
+
+@code
+{
+    public Customer customerForUpdate = new Customer();
+
+    public bool isEdit = false;
+    public bool isDelete = false;
+    public bool operationKey = false;
+    public bool isChange = true;
+
+    public int customerId = 0;
+
+    /*public void TakeIdForEdit(int id)
+    {
+        customerId = id;
+        isEdit = true;
+    }*/
+
+    /*public async void UpdateCustomer()
+    {
+        customerForUpdate.Id = customerId;
+        customers.Where(x => x.Id == customerId).FirstOrDefault().Id = customerForUpdate.Id;
+        customers.Where(x => x.Id == customerId).FirstOrDefault().Name = customerForUpdate.Name;
+        customers.Where(x => x.Id == customerId).FirstOrDefault().Surname = customerForUpdate.Surname;
+        customers.Where(x => x.Id == customerId).FirstOrDefault().Username = customerForUpdate.Username;
+        customers.Where(x => x.Id == customerId).FirstOrDefault().Password = customerForUpdate.Password;
+        customers.Where(x => x.Id == customerId).FirstOrDefault().TaxAdministration = customerForUpdate.TaxAdministration;
+        customers.Where(x => x.Id == customerId).FirstOrDefault().BankAccountNumber = customerForUpdate.BankAccountNumber;
+
+        await Http.PutAsJsonAsync<Customer>("api/Customers", customerForUpdate);
+    }*/
+
+    public Customer customerFromEditComponent = new Customer();
+
+    public async void ShowTheEditModal(int id)
+    {
+        var parameters1 = new ModalParameters();
+        parameters1.Add(nameof(EditComponent.CustomerId), id);
+
+        var editComponent = Modal.Show<EditComponent>("", parameters1);
+        var result = await editComponent.Result;
+
+        @if (!result.Cancelled)
+        {
+            var customerString = result.Data.ToString();
+            string[] array = customerString.Split(",");
+            customerFromEditComponent.Id = Int32.Parse(array[0]);
+            customerFromEditComponent.Name = array[1];
+            customerFromEditComponent.Surname = array[2];
+            customerFromEditComponent.Username = array[3];
+            customerFromEditComponent.Password = array[4];
+            customerFromEditComponent.TaxAdministration = array[5];
+            customerFromEditComponent.BankAccountNumber = array[6];
+            customers.Remove(customers.Where(x => x.Id == customerFromEditComponent.Id).FirstOrDefault());
+            customers.Add(customerFromEditComponent);
+
+            if (isChange == true)
+            {
+                isChange = false;
+            }
+            else
+            {
+                isChange = true;
+            }
+            UriHelper.NavigateTo("customer-manage");
+        }
+    }
+
+    //Deleting
+    public void OnClose(bool _key)
+    {
+        isDelete = false;
+        operationKey = _key;
+        NewMethod(customerId);
+    }
+    public void NewMethod(int id)
+    {
+        if (operationKey)
+        {
+            Http.DeleteAsync($"api/Customers/{id}");
+            var x = customers.Where(i => i.Id == id).ToList();
+            customers.Remove(x.First());
+            isDelete = false;
+        }
+    }
+    public void TakeIdForDelete(int id)
+    {
+        customerId = id;
+        isDelete = true;
+    }
+
+    //api consuming
+    private List<Customer> customers;
+    protected override async Task OnInitializedAsync()
+    {
+        customers = await Http.GetFromJsonAsync<List<Customer>>("api/Customers");
+    }
+}

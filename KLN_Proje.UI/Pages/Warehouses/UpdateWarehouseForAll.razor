@@ -1,0 +1,102 @@
+﻿@inject HttpClient Http
+<h3>UpdateWarehouseForAll</h3>
+@using Newtonsoft.Json;
+
+<EditForm Model="warehouse">
+    <DataAnnotationsValidator />
+
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Update Warehouse </h5>
+            <div class="form-group row">
+                @{
+                    warehouse.Id = warehouseId;
+                }
+                <label class="col-sm-4 col-form-label">Warehouse Id: <span class="font-weight-bold">@warehouseId</span></label>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-sm-4 col-form-label">Name</label>
+                <div class="col-sm-8">
+                    <InputText id="name" class="form-control" placeholder="Warehouse Name" @bind-Value="@warehouse.Name" />
+                    <span><ValidationMessage For="@(() => warehouse.Name)" /></span>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-sm-4 col-form-label">Company Name: <span class="font-weight-bolder"></span></label>
+                <div class="col-sm-8">
+                    <InputSelect @bind-Value="companyId" class="form-control">
+                        <option value=0>Choose</option>
+                        @foreach (var company in companiesFromParent)
+                        {
+                            <option value="@company.Id">@company.Name</option>
+                        }
+                    </InputSelect>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-sm-8">
+                    <button @onclick="@PutWarehouse" type="submit" class="btn btn-primary">Update Stock</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</EditForm>
+
+@code {
+    private Warehouse warehouse = new Warehouse();
+
+    [Parameter]
+    public int warehouseId { get; set; }
+
+    [Parameter]
+    public int companyId { get; set; }
+
+    [Parameter]
+    public string companiesString { get; set; }
+
+    [Parameter]
+    public string warehosuesString { get; set; }
+
+    [Parameter]
+    public EventCallback<Warehouse> WarehouseToBeSent { get; set; }
+
+    public void Trigger()
+    {
+        WarehouseToBeSent.InvokeAsync(warehouse);
+    }
+
+
+    //Update
+    private async Task PutWarehouse()
+    {
+        warehouse.CompanyId = companyId;
+        var warehouseUpdate = warehousesFromParent.FirstOrDefault(x => x.Id == warehouseId);
+        UpdateWarehouseList(warehouseId, warehouse.Name, warehouse.CompanyId);
+        await Http.PutAsJsonAsync("api/warehouses", warehouse);
+        Trigger();
+    }
+    public void UpdateWarehouseList(int id, string name = null, int companyId = 0)
+    {
+        var warehouseUpdate = warehousesFromParent.FirstOrDefault(x => x.Id == warehouseId);
+        warehouseUpdate.Name = name != null ? name : warehouse.Name;
+        warehouseUpdate.CompanyId = companyId != 0 ? companyId : warehouse.CompanyId;
+    }
+
+    //Deserialize
+    public List<Company> companiesFromParent;
+    public List<Warehouse> warehousesFromParent;
+    public void DeserializeLists(string _companiesString, string _warehousesString)
+    {
+        companiesFromParent = JsonConvert.DeserializeObject<List<Company>>(_companiesString);
+        warehousesFromParent = JsonConvert.DeserializeObject<List<Warehouse>>(_warehousesString);
+    }
+
+    //Initialize
+    protected async override Task OnInitializedAsync()
+    {
+        DeserializeLists(companiesString, warehosuesString);
+    }
+}

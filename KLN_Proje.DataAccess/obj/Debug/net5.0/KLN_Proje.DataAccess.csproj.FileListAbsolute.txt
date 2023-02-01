@@ -1,0 +1,35 @@
+C:\Users\Mert Sigirci\Desktop\KLN_Proje\KLN_Proje.DataAccess\bin\Debug\net5.0\KLN_Proje.DataAccess.deps.json
+C:\Users\Mert Sigirci\Desktop\KLN_Proje\KLN_Proje.DataAccess\bin\Debug\net5.0\KLN_Proje.DataAccess.runtimeconfig.json
+C:\Users\Mert Sigirci\Desktop\KLN_Proje\KLN_Proje.DataAccess\bin\Debug\net5.0\KLN_Proje.DataAccess.runtimeconfig.dev.json
+C:\Users\Mert Sigirci\Desktop\KLN_Proje\KLN_Proje.DataAccess\bin\Debug\net5.0\KLN_Proje.DataAccess.dll
+C:\Users\Mert Sigirci\Desktop\KLN_Proje\KLN_Proje.DataAccess\bin\Debug\net5.0\ref\KLN_Proje.DataAccess.dll
+C:\Users\Mert Sigirci\Desktop\KLN_Proje\KLN_Proje.DataAccess\bin\Debug\net5.0\KLN_Proje.DataAccess.pdb
+C:\Users\Mert Sigirci\Desktop\KLN_Proje\KLN_Proje.DataAccess\bin\Debug\net5.0\KLN_Proje.Entities.dll
+C:\Users\Mert Sigirci\Desktop\KLN_Proje\KLN_Proje.DataAccess\bin\Debug\net5.0\KLN_Proje.Entities.pdb
+C:\Users\Mert Sigirci\Desktop\KLN_Proje\KLN_Proje.DataAccess\obj\Debug\net5.0\KLN_Proje.DataAccess.csproj.AssemblyReference.cache
+C:\Users\Mert Sigirci\Desktop\KLN_Proje\KLN_Proje.DataAccess\obj\Debug\net5.0\KLN_Proje.DataAccess.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Mert Sigirci\Desktop\KLN_Proje\KLN_Proje.DataAccess\obj\Debug\net5.0\KLN_Proje.DataAccess.AssemblyInfoInputs.cache
+C:\Users\Mert Sigirci\Desktop\KLN_Proje\KLN_Proje.DataAccess\obj\Debug\net5.0\KLN_Proje.DataAccess.AssemblyInfo.cs
+C:\Users\Mert Sigirci\Desktop\KLN_Proje\KLN_Proje.DataAccess\obj\Debug\net5.0\KLN_Proje.DataAccess.csproj.CoreCompileInputs.cache
+C:\Users\Mert Sigirci\Desktop\KLN_Proje\KLN_Proje.DataAccess\obj\Debug\net5.0\KLN_Proje.DataAccess.dll
+C:\Users\Mert Sigirci\Desktop\KLN_Proje\KLN_Proje.DataAccess\obj\Debug\net5.0\ref\KLN_Proje.DataAccess.dll
+C:\Users\Mert Sigirci\Desktop\KLN_Proje\KLN_Proje.DataAccess\obj\Debug\net5.0\KLN_Proje.DataAccess.pdb
+C:\Users\Mert Sigirci\Desktop\KLN_Proje\KLN_Proje.DataAccess\obj\Debug\net5.0\KLN_Proje.DataAccess.genruntimeconfig.cache
+C:\Users\Mert Sigirci\Desktop\KLN\KLN CRUD (.NET-Web Assembly) Website\KLN_Proje\KLN_Proje.DataAccess\bin\Debug\net5.0\KLN_Proje.DataAccess.deps.json
+C:\Users\Mert Sigirci\Desktop\KLN\KLN CRUD (.NET-Web Assembly) Website\KLN_Proje\KLN_Proje.DataAccess\bin\Debug\net5.0\KLN_Proje.DataAccess.runtimeconfig.json
+C:\Users\Mert Sigirci\Desktop\KLN\KLN CRUD (.NET-Web Assembly) Website\KLN_Proje\KLN_Proje.DataAccess\bin\Debug\net5.0\KLN_Proje.DataAccess.runtimeconfig.dev.json
+C:\Users\Mert Sigirci\Desktop\KLN\KLN CRUD (.NET-Web Assembly) Website\KLN_Proje\KLN_Proje.DataAccess\bin\Debug\net5.0\KLN_Proje.DataAccess.dll
+C:\Users\Mert Sigirci\Desktop\KLN\KLN CRUD (.NET-Web Assembly) Website\KLN_Proje\KLN_Proje.DataAccess\bin\Debug\net5.0\ref\KLN_Proje.DataAccess.dll
+C:\Users\Mert Sigirci\Desktop\KLN\KLN CRUD (.NET-Web Assembly) Website\KLN_Proje\KLN_Proje.DataAccess\bin\Debug\net5.0\KLN_Proje.DataAccess.pdb
+C:\Users\Mert Sigirci\Desktop\KLN\KLN CRUD (.NET-Web Assembly) Website\KLN_Proje\KLN_Proje.DataAccess\bin\Debug\net5.0\KLN_Proje.Entities.dll
+C:\Users\Mert Sigirci\Desktop\KLN\KLN CRUD (.NET-Web Assembly) Website\KLN_Proje\KLN_Proje.DataAccess\bin\Debug\net5.0\KLN_Proje.Entities.pdb
+C:\Users\Mert Sigirci\Desktop\KLN\KLN CRUD (.NET-Web Assembly) Website\KLN_Proje\KLN_Proje.DataAccess\obj\Debug\net5.0\KLN_Proje.DataAccess.csproj.AssemblyReference.cache
+C:\Users\Mert Sigirci\Desktop\KLN\KLN CRUD (.NET-Web Assembly) Website\KLN_Proje\KLN_Proje.DataAccess\obj\Debug\net5.0\KLN_Proje.DataAccess.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Mert Sigirci\Desktop\KLN\KLN CRUD (.NET-Web Assembly) Website\KLN_Proje\KLN_Proje.DataAccess\obj\Debug\net5.0\KLN_Proje.DataAccess.AssemblyInfoInputs.cache
+C:\Users\Mert Sigirci\Desktop\KLN\KLN CRUD (.NET-Web Assembly) Website\KLN_Proje\KLN_Proje.DataAccess\obj\Debug\net5.0\KLN_Proje.DataAccess.AssemblyInfo.cs
+C:\Users\Mert Sigirci\Desktop\KLN\KLN CRUD (.NET-Web Assembly) Website\KLN_Proje\KLN_Proje.DataAccess\obj\Debug\net5.0\KLN_Proje.DataAccess.csproj.CoreCompileInputs.cache
+C:\Users\Mert Sigirci\Desktop\KLN\KLN CRUD (.NET-Web Assembly) Website\KLN_Proje\KLN_Proje.DataAccess\obj\Debug\net5.0\KLN_Proje.DataAccess.csproj.CopyComplete
+C:\Users\Mert Sigirci\Desktop\KLN\KLN CRUD (.NET-Web Assembly) Website\KLN_Proje\KLN_Proje.DataAccess\obj\Debug\net5.0\KLN_Proje.DataAccess.dll
+C:\Users\Mert Sigirci\Desktop\KLN\KLN CRUD (.NET-Web Assembly) Website\KLN_Proje\KLN_Proje.DataAccess\obj\Debug\net5.0\ref\KLN_Proje.DataAccess.dll
+C:\Users\Mert Sigirci\Desktop\KLN\KLN CRUD (.NET-Web Assembly) Website\KLN_Proje\KLN_Proje.DataAccess\obj\Debug\net5.0\KLN_Proje.DataAccess.pdb
+C:\Users\Mert Sigirci\Desktop\KLN\KLN CRUD (.NET-Web Assembly) Website\KLN_Proje\KLN_Proje.DataAccess\obj\Debug\net5.0\KLN_Proje.DataAccess.genruntimeconfig.cache

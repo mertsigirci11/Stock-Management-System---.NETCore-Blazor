@@ -1,0 +1,225 @@
+﻿@page "/list-invoices-by-id"
+@inject HttpClient Http
+@inject IModalService Modal
+
+<h3>
+    List Of Invoices
+    <a href="customer-manage">
+        <button class="btn" style="background-color:orange">
+            <span style="font-weight:700; color:white">Go To List Of Customers</span>
+        </button>
+    </a>
+
+    <button class="btn" style="background-color:gold; float:right" @onclick="ShowTheFilterModal">
+        <span style="font-weight:700; color:white">Filter</span>
+    </button>
+
+    @if (filterKey)
+    {
+        <button class="btn btn-danger" style="float:right" @onclick="CancelFilter">
+            <span style="font-weight:700; color:white">Filter x</span>
+        </button>
+    }
+
+
+
+</h3>
+
+@if (invoiceMasters == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    if (filterKey == false)
+    {
+        <table class="table">
+            <thead class="bg-dark text-white">
+                <tr>
+                    <th>Id</th>
+                    <th>Customer Name</th>
+                    <th>Customer Tax Administration</th>
+                    <th>Customer Bank Account Number</th>
+                    <th>Date</th>
+                    <th>String Price</th>
+                    <th>Price</th>
+                    <th>VAT</th>
+                    <th>Total Price</th>
+                    <th>Office Id</th>
+                    <th>Customer Id</th>
+                    <th><!--Detail--></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var invoiceMaster in invoiceMasters)
+                {
+                    <tr>
+                        <td>@invoiceMaster.Id</td>
+                        <td>@invoiceMaster.CustomerName</td>
+                        <td>@invoiceMaster.CustomerTaxAdministration</td>
+                        <td>@invoiceMaster.CustomerBankAccountNumber</td>
+                        <td>@invoiceMaster.DateTime</td>
+                        <td>@invoiceMaster.StringPrice</td>
+                        <td>@invoiceMaster.Price</td>
+                        <td>@invoiceMaster.VAT</td>
+                        <td>@invoiceMaster.TotalPrice</td>
+                        <td>@invoiceMaster.OfficeId</td>
+                        <td>@invoiceMaster.CustomerId</td>
+                        <!--<td><button class="btn btn-primary" @onclick="(() => ShowDetail(invoiceMaster.Id))">Detail</button></td>-->
+
+                        <td><button class="btn btn-primary" @onclick="@(()=> ShowTheModal(invoiceMaster.Id))">Detail</button></td>
+
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+
+}
+
+
+@if (filterKey)
+{
+    <table class="table">
+        <thead class="bg-dark text-white">
+            <tr>
+                <th>Id</th>
+                <th>Customer Name</th>
+                <th>Customer Tax Administration</th>
+                <th>Customer Bank Account Number</th>
+                <th>Date</th>
+                <th>String Price</th>
+                <th>Price</th>
+                <th>VAT</th>
+                <th>Total Price</th>
+                <th>Office Id</th>
+                <th>Customer Id</th>
+                <th><!--Detail--></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var office in offices)
+            {
+                if (office.CompanyId == companyId)
+                {
+                    foreach (var invoiceMaster in invoiceMasters)
+                    {
+                        if (invoiceMaster.OfficeId == office.Id)
+                        {
+                            <tr>
+                                <td>@invoiceMaster.Id</td>
+                                <td>@invoiceMaster.CustomerName</td>
+                                <td>@invoiceMaster.CustomerTaxAdministration</td>
+                                <td>@invoiceMaster.CustomerBankAccountNumber</td>
+                                <td>@invoiceMaster.DateTime</td>
+                                <td>@invoiceMaster.StringPrice</td>
+                                <td>@invoiceMaster.Price</td>
+                                <td>@invoiceMaster.VAT</td>
+                                <td>@invoiceMaster.TotalPrice</td>
+                                <td>@invoiceMaster.OfficeId</td>
+                                <td>@invoiceMaster.CustomerId</td>
+                                <!--<td><button class="btn btn-primary" @onclick="(() => ShowDetail(invoiceMaster.Id))">Detail</button></td>-->
+
+                                <td><button class="btn btn-primary" @onclick="@(()=> ShowTheModal(invoiceMaster.Id))">Detail</button></td>
+
+                            </tr>
+                        }
+                    }
+                }
+            }
+        </tbody>
+    </table>
+}
+
+@if (isDetail)
+{
+    <table class="table">
+        <thead class="bg-dark text-white">
+            <tr>
+                <th>Id</th>
+                <th>Product Name</th>
+                <th>Pieces</th>
+                <th>Price</th>
+                <th>Amount</th>
+                <th>InvoiceMaster Id</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var invoiceDetail in invoiceDetails)
+            {
+                <tr>
+                    <td>@invoiceDetail.Id</td>
+                    <td>@invoiceDetail.ProductName</td>
+                    <td>@invoiceDetail.Pieces</td>
+                    <td>@invoiceDetail.Price $</td>
+                    <td>@invoiceDetail.Amount</td>
+                    <td>@invoiceDetail.InvoiceMasterId</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+
+@code
+    {
+    public InvoiceMaster invoiceMaster = new InvoiceMaster();
+    //public Customer customer = new Customer();
+
+    public int invoiceMasterId = 0;
+    public int companyId = 0;
+    public string companyIdString = "";
+
+    public bool isDetail = false;
+    public bool filterKey = false;
+
+    public async void ShowDetail(int id)
+    {
+        invoiceMasterId = id;
+        invoiceDetails = await Http.GetFromJsonAsync<List<InvoiceDetail>>($"api/InvoiceDetails/{invoiceMasterId}");
+        isDetail = true;
+    }
+
+    public void CancelFilter()
+    {
+        filterKey = false;
+    }
+
+
+    async Task ShowTheModal(int id)
+    {
+        var parameters1 = new ModalParameters();
+        parameters1.Add(nameof(InvoiceDetailCompanent.InvoiceMasterId), id);
+        invoiceDetails = await Http.GetFromJsonAsync<List<InvoiceDetail>>($"api/InvoiceDetails/{invoiceMasterId}");
+        Modal.Show<InvoiceDetailCompanent>("Invoice Details", parameters1);
+    }
+
+    async Task ShowTheFilterModal()
+    {
+        var filterComponent = Modal.Show<Filter_Component>();
+        var result = await filterComponent.Result;
+
+        @if (!result.Cancelled)
+        {
+            companyIdString = result.Data.ToString();
+            companyId = Int32.Parse(companyIdString);
+            filterKey = true;
+        }
+
+    }
+
+
+
+
+    //api consuming variables
+    public List<InvoiceMaster> invoiceMasters;
+    public List<InvoiceDetail> invoiceDetails;
+    public List<Office> offices;
+    //public List<Customer> customers;
+    protected override async Task OnInitializedAsync()
+    {
+        invoiceMasters = await Http.GetFromJsonAsync<List<InvoiceMaster>>("api/InvoiceMasters");
+        offices = await Http.GetFromJsonAsync<List<Office>>("api/Companies");
+        //customers = await Http.GetFromJsonAsync<List<Customer>>("api/Customers");
+    }
+}
